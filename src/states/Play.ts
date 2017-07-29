@@ -30,12 +30,12 @@ export default class Play extends Phaser.State {
         }
         this.game.stage.backgroundColor = '#9badb7';
 
-        /*
-        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
-        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-day');
-        this.background.loadTexture('background-night');
-        this.background.fixedToCamera = true;
-*/
+
+//        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
+        this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background');
+        this.background.loadTexture('background');
+//        this.background.fixedToCamera = true;
+
         this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
         this.briefingText.fixedToCamera = true;
 
