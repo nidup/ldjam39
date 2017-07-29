@@ -5,8 +5,6 @@ import SoundManager from "../SoundManager";
 import {Level} from "../Level";
 import {Door} from "../Door";
 
-//import * as Pd from "../lib/webpd-latest.min.js";
-
 export default class Play extends Phaser.State
 {
     private blackout: boolean = false;

@@ -30,11 +30,14 @@ export class Hero extends Phaser.Sprite {
         this.body.gravity.y = 1000;
 
 
-        this.animations.add('idle-left', [2, 3], 4, true);
         this.animations.add('idle-right', [0, 1], 2, true);
+        this.animations.add('idle-left', [2, 3], 4, true);
         this.animations.add('dancing', [4, 5, 6, 7], 4, true);
-        this.animations.add('left', [12, 13, 14, 15], 6, true);
         this.animations.add('right', [8, 9, 10, 11], 6, true);
+        this.animations.add('left', [12, 13, 14, 15], 6, true);
+        this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
+        this.animations.add('jump-left', [20, 21, 22, 23], 6, false);
+
 
         game.add.existing(this);
 
@@ -75,6 +78,7 @@ export class Hero extends Phaser.Sprite {
             if (this.facing == 'right' && this.facing != 'idle') {
                 this.animations.play('idle-right');
                 this.facing = 'idle';
+
             } else if (this.facing == 'left' && this.facing != 'idle') {
                 this.animations.play('idle-left');
                 this.facing = 'idle';
@@ -86,9 +90,18 @@ export class Hero extends Phaser.Sprite {
         }
 
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
+
             SoundManager.instance.send(SoundManager.ReceiverJump, [SoundManager.ActionBang]);
             this.body.velocity.y = -300;
             this.jumpTimer = this.game.time.now + 100;
+
+            if (this.facing == 'left') {
+                this.animations.play('jump-left');
+                this.facing = 'left';
+            } else if (this.facing == 'right') {
+                this.animations.play('jump-right');
+                this.facing = 'right';
+            }
         }
     }
 
