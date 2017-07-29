@@ -1,4 +1,5 @@
 
+import SoundManager from "./SoundManager";
 export class Hero extends Phaser.Sprite {
 
     private originX: number;
@@ -9,7 +10,7 @@ export class Hero extends Phaser.Sprite {
     private jumpTimer = 0;
     private facing = 'right';
     private dancing = false;
-    public walkingTileIndex = 0;
+    public walkingFloorIndex = 0;
 
     constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
         super(game, x, y, key, frame);
@@ -41,8 +42,7 @@ export class Hero extends Phaser.Sprite {
     {
         this.body.velocity.x = 0;
 
-        // Send pos for pan sound
-        Pd.send('pos', [this.x / 1280]);
+        this.updateSoundPan();
 
         if (this.dancing) {
             if (this.facing != 'dancing') {
@@ -79,7 +79,7 @@ export class Hero extends Phaser.Sprite {
         }
 
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
-            Pd.send('sample', ['bang']);
+            SoundManager.instance.send('sample', ['bang']);
             this.body.velocity.y = -150;
             this.jumpTimer = this.game.time.now + 10;
         }
@@ -105,6 +105,29 @@ export class Hero extends Phaser.Sprite {
     public dance () {
         this.x = this.x + 1; // TODO: dirty hack to raise coins emitter
         this.dancing = true;
+    }
+
+    public changeFloor(index)
+    {
+        if (index == this.walkingFloorIndex) {
+            return;
+        }
+
+        var textureSounds = {
+            10: 1,  // Béton
+            11: 2,  // Tole
+            12: 3,  // Carton
+            13: 4   // Eau / Flaque
+        };
+
+        console.log('NOW WALKING ON ' + index);
+        this.walkingFloorIndex = index;
+        SoundManager.instance.send('Texture', [textureSounds[index]]);
+    }
+
+    public updateSoundPan()
+    {
+        SoundManager.instance.send('pos', [this.x / 1280]);
     }
 
     private restartLevel() {

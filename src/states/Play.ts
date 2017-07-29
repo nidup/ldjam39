@@ -4,6 +4,7 @@ import {Snake} from "../Snake";
 import {Gnome} from "../Gnome";
 import {Box} from "../Box";
 import LevelProgress from "../LevelProgress";
+import SoundManager from "../SoundManager";
 
 //import * as Pd from "../lib/webpd-latest.min.js";
 
@@ -58,7 +59,7 @@ export default class Play extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 350;
 
-        this.hero = new Hero(this.game, 5, 5, 'lionel', 0, this.game.input.keyboard);
+        this.hero = new Hero(this.game, 5, 600, 'lionel', 0, this.game.input.keyboard);
         this.game.camera.follow(this.hero);
 
         this.snakes = new Array();
@@ -72,7 +73,7 @@ export default class Play extends Phaser.State {
         // this.gnomes[2] = new Gnome(this.game, 1550, 370, 'gnome', 0);
         // this.gnomes[3] = new Gnome(this.game, 1750, 370, 'gnome', 0);
 
-        this.box = new Box(this.game, 1200, 5, 'gnome', 0);
+        this.box = new Box(this.game, 1200, 600, 'gnome', 0);
 
         this.levelProgress = new LevelProgress(this.gnomes, this.hero);
 
@@ -88,17 +89,13 @@ export default class Play extends Phaser.State {
         this.coinRightEmitter.setYSpeed(-50, 50);
         this.coinRightEmitter.makeParticles('coin', [0, 1, 2, 3, 4, 5, 6, 7]);
 
-        Pd.send('initRoomtone', ['bang']);
+        SoundManager.instance.send('initRoomtone', ['bang']);
     }
 
     public update()
     {
         this.game.physics.arcade.collide(this.hero, this.layer, function (hero: Hero, tile) {
-            if(hero.walkingTileIndex != tile.index) {
-                hero.walkingTileIndex = tile.index;
-                console.log('NOW WALKING ON ' + tile.index);
-            }
-            // console.log(tile.index);
+            hero.changeFloor(tile.index);
         });
         this.hero.update();
 
@@ -133,7 +130,7 @@ export default class Play extends Phaser.State {
         this.game.physics.arcade.collide(this.box, this.layer);
         this.box.update();
         this.game.physics.arcade.collide(this.hero, this.box, function () {
-            Pd.send('sample', ['bang']);
+            SoundManager.instance.send('sample', ['bang']);
             this.box.destroy();
             this.game.add.image(0, 0, 'blackout');
         }, null, this);

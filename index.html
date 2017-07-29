@@ -11,22 +11,6 @@
 <script type="text/javascript" src="lib/phaser.js"></script>
 <script type="text/javascript" src="lib/webpd-latest.min.js"></script>
 <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
-<script>
-    var patch;
-    var Pd;
-    $.get('assets/puredata/maintest.pd', function(main) {
-//        $.get('assets/puredata/e_pan.pd', function(pan) {
-//            Pd.registerAbstraction('e_pan', pan);
-            patch = Pd.loadPatch(main);
-            Pd.start();
-//        });
-//        patch = Pd.loadPatch(testsampleStr);
-        // Loading the patch and abstraction
-//        Pd.registerAbstraction('s_playtable', abstrStr);
-//        Pd.loadPatch(testsampleStr);
-//        Pd.send('loadBang', ['bang']);
-    });
-</script>
 <script type="text/javascript" src="build/bundle.js"></script>
 </body>
 </html>
