@@ -37,7 +37,8 @@ export default class Play extends Phaser.State {
                 1, 2, 3, 4, 5, 6, 7,
                 12, 13, 17,
                 21, 22, 23, 24, 25, 26, 27,
-                32, 33
+                32, 33,
+                42
             ]
         );
 
