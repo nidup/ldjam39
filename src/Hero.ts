@@ -34,9 +34,9 @@ export class Hero extends Phaser.Sprite {
         this.animations.add('idle-left', [2, 3], 4, true);
         this.animations.add('dancing', [4, 5, 6, 7], 4, true);
         this.animations.add('right', [8, 9, 10, 11], 6, true);
-        this.animations.add('left', [12, 13, 14, 15], 6, true);
+        this.animations.add('left', [15, 14, 13, 12], 6, true);
         this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
-        this.animations.add('jump-left', [20, 21, 22, 23], 6, false);
+        this.animations.add('jump-left', [23, 22, 21, 20], 6, false);
 
 
         game.add.existing(this);
