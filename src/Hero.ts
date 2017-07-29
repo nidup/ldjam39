@@ -23,7 +23,7 @@ export class Hero extends Phaser.Sprite {
 
         this.body.bounce.y = 0.0;
         this.body.collideWorldBounds = true;
-        this.body.setCircle(26, 2, 12);
+        this.body.setSize(20, 60, 10, 4);
 
         this.animations.add('idle-left', [0, 1, 2, 3], 4, true);
         this.animations.add('idle-right', [0, 1], 2, true);
