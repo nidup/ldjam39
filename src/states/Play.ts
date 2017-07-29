@@ -1,9 +1,6 @@
 
 import {Hero} from "../Hero";
-import {Snake} from "../Snake";
-import {Gnome} from "../Gnome";
 import {Box} from "../Box";
-import LevelProgress from "../LevelProgress";
 import SoundManager from "../SoundManager";
 
 //import * as Pd from "../lib/webpd-latest.min.js";
@@ -12,17 +9,11 @@ export default class Play extends Phaser.State {
 
     private hero: Hero;
     private box: Box;
-    private snakes: Array<Snake>;
-    private gnomes: Array<Gnome>;
-    private levelProgress: LevelProgress;
     private map;
     private layer;
     private background;
     private debug: boolean = false;
-    private seaLevel: number = 450;
-    private briefingText : Phaser.BitmapText;
-    private coinLeftEmitter;
-    private coinRightEmitter;
+    // private briefingText : Phaser.BitmapText;
 
     public create()
     {
@@ -31,14 +22,13 @@ export default class Play extends Phaser.State {
         }
         this.game.stage.backgroundColor = '#9badb7';
 
-
 //        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
         this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background');
         this.background.loadTexture('background');
 //        this.background.fixedToCamera = true;
 
-        this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
-        this.briefingText.fixedToCamera = true;
+        // this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
+        // this.briefingText.fixedToCamera = true;
 
         this.map = this.game.add.tilemap('level1');
         this.map.addTilesetImage('tiles-1');
@@ -56,40 +46,13 @@ export default class Play extends Phaser.State {
             this.layer.debug = true;
         }
         this.layer.resizeWorld();
-
         this.game.physics.arcade.gravity.y = 350;
 
         this.hero = new Hero(this.game, 5, 600, 'lionel', 0, this.game.input.keyboard);
+        this.box = new Box(this.game, 1200, 600, 'gnome', 0);
         this.game.camera.follow(this.hero);
 
-        this.snakes = new Array();
-        // this.snakes[0] = new Snake(this.game, 330, 370, 'snake', 0);
-        // this.snakes[1] = new Snake(this.game, 750, 250, 'snake', 0);
-        // this.snakes[2] = new Snake(this.game, 1050, 250, 'snake', 0);
-
-        this.gnomes = new Array();
-        // this.gnomes[0] = new Gnome(this.game, 210, 200, 'gnome', 0);
-        // this.gnomes[1] = new Gnome(this.game, 530, 370, 'gnome', 0);
-        // this.gnomes[2] = new Gnome(this.game, 1550, 370, 'gnome', 0);
-        // this.gnomes[3] = new Gnome(this.game, 1750, 370, 'gnome', 0);
-
-        this.box = new Box(this.game, 1200, 600, 'gnome', 0);
-
-        this.levelProgress = new LevelProgress(this.gnomes, this.hero);
-
-        this.coinLeftEmitter = this.game.add.emitter(0, 80, 1000);
-        this.coinLeftEmitter.bounce.setTo(0.5, 0.5);
-        this.coinLeftEmitter.setXSpeed(100, 500);
-        this.coinLeftEmitter.setYSpeed(-50, 50);
-        this.coinLeftEmitter.makeParticles('coin', [0, 1, 2, 3, 4, 5, 6, 7]);
-
-        this.coinRightEmitter = this.game.add.emitter(800, 80, 1000);
-        this.coinRightEmitter.bounce.setTo(0.5, 0.5);
-        this.coinRightEmitter.setXSpeed(-100, -500);
-        this.coinRightEmitter.setYSpeed(-50, 50);
-        this.coinRightEmitter.makeParticles('coin', [0, 1, 2, 3, 4, 5, 6, 7]);
-
-        SoundManager.instance.send('initRoomtone', ['bang']);
+        SoundManager.instance.send('InitRoomtone', ['bang']);
     }
 
     public update()
@@ -99,73 +62,21 @@ export default class Play extends Phaser.State {
         });
         this.hero.update();
 
-        /*
-        if (this.hero.y > this.seaLevel) {
-            this.briefingText.text = 'Argh! I\'m drowing!!';
-            this.hero.drown();
-        }*/
-
-        if (this.levelProgress.isFinished()) {
-            this.briefingText.text = 'Yeahhhh!! Profit!!!! You finished the game :D';
-            this.coinLeftEmitter.start(false, 5000, 20);
-            this.coinRightEmitter.start(false, 5000, 20);
-            this.hero.dance();
-            for (let i = 0; i < this.gnomes.length; i++) {
-                this.gnomes[i].dance();
-            }
-        }
-
-        for (let i = 0; i < this.snakes.length; i++) {
-            this.game.physics.arcade.collide(this.snakes[i], this.layer);
-            this.snakes[i].update();
-            this.game.physics.arcade.overlap(this.hero, this.snakes[i], this.bite, null, this);
-        }
-
-        for (let i = 0; i < this.gnomes.length; i++) {
-            this.game.physics.arcade.collide(this.gnomes[i], this.layer);
-            this.gnomes[i].update();
-            this.game.physics.arcade.overlap(this.hero, this.gnomes[i], this.steal, null, this);
-        }
-
         this.game.physics.arcade.collide(this.box, this.layer);
         this.box.update();
         this.game.physics.arcade.collide(this.hero, this.box, function () {
             SoundManager.instance.send('sample', ['bang']);
             this.box.destroy();
-            this.game.add.image(0, 0, 'blackout');
+            var s = this.game.add.sprite(0, 0, 'blackout');
+            s.alpha = 0.75;
         }, null, this);
-    }
-
-    public bite (hero: Hero, snake: Snake)
-    {
-        hero.biten();
-        this.briefingText.text = 'Argh! Bitten by a snake!';
-    }
-
-    public steal (hero: Hero, gnome: Gnome)
-    {
-        if (gnome.isNude()) {
-            return;
-        }
-        gnome.stolen();
-        if (this.levelProgress.isDay()) {
-            this.background.loadTexture('background-day');
-            this.hero.changeOriginPosition();
-            this.briefingText.text = 'I have all of them and day is coming, let\'s go back home!';
-        } else {
-            this.briefingText.text = 'Niak, niak, niak, and '+this.levelProgress.countNudes()+' collected!';
-        }
     }
 
     public render()
     {
         if (this.debug) {
             this.game.debug.body(this.hero);
-            for (let i = 0; i < this.snakes.length; i++) {
-                this.game.debug.body(this.snakes[i]);
-            }
             this.game.debug.body(this.box);
-
             this.game.debug.text(
                 "FPS: "  + this.game.time.fps + " ",
                 2,
