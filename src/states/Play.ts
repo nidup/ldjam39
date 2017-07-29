@@ -20,7 +20,7 @@ export default class Play extends Phaser.State
     private layer;
     private background;
     private debug: boolean = false;
-    // private briefingText : Phaser.BitmapText;
+    //private briefingText : Phaser.BitmapText;
 
     public create()
     {
@@ -34,8 +34,8 @@ export default class Play extends Phaser.State
         this.background.loadTexture('background');
 //        this.background.fixedToCamera = true;
 
-        // this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
-        // this.briefingText.fixedToCamera = true;
+        //this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
+        //this.briefingText.fixedToCamera = true;
 
         this.levels = [
             new Level(1, new Phaser.Point(5, 700), new Phaser.Point(1200, 700)),

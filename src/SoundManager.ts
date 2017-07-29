@@ -1,4 +1,7 @@
 
+declare var $: any;
+declare var window: any;
+
 export default class SoundManager {
 
     private Pd;
