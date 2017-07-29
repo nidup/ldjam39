@@ -5,6 +5,8 @@ import {Gnome} from "../Gnome";
 import {Box} from "../Box";
 import LevelProgress from "../LevelProgress";
 
+//import * as Pd from "../lib/webpd-latest.min.js";
+
 export default class Play extends Phaser.State {
 
     private hero: Hero;
@@ -26,7 +28,7 @@ export default class Play extends Phaser.State {
         if (this.debug) {
             this.game.time.advancedTiming = true
         }
-        this.game.stage.backgroundColor = '#000000';
+        this.game.stage.backgroundColor = '#9badb7';
 
         /*
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
@@ -56,7 +58,7 @@ export default class Play extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 350;
 
-        this.hero = new Hero(this.game, 5, 5, 'king', 0, this.game.input.keyboard);
+        this.hero = new Hero(this.game, 5, 5, 'lionel', 0, this.game.input.keyboard);
         this.game.camera.follow(this.hero);
 
         this.snakes = new Array();

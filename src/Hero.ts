@@ -23,15 +23,13 @@ export class Hero extends Phaser.Sprite {
 
         this.body.bounce.y = 0.0;
         this.body.collideWorldBounds = true;
-        this.body.setCircle(13, 2, 6);
+        this.body.setCircle(26, 2, 12);
 
-        // this.scale.set(2,2);
-
-        this.animations.add('idle-left', [23], 10, true);
-        this.animations.add('left', [23, 24, 25, 26], 10, true);
-        this.animations.add('idle-right', [0], 10, true);
-        this.animations.add('right', [0, 1, 2, 3], 10, true);
-        this.animations.add('dancing', [0, 1, 2, 3, 18, 19, 20, 21, 22, 23, 24, 25, 26], 10, true);
+        this.animations.add('idle-left', [0, 1, 2, 3], 4, true);
+        this.animations.add('idle-right', [0, 1], 2, true);
+        this.animations.add('dancing', [4, 5, 6, 7], 4, true);
+        this.animations.add('left', [8, 9, 10, 11], 4, true);
+        this.animations.add('right', [8, 9, 10, 11], 4, true);
 
         game.add.existing(this);
 
