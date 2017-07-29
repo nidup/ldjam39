@@ -1,5 +1,5 @@
 
-export class Box extends Phaser.Sprite {
+export class Door extends Phaser.Sprite {
 
     private limitLeftX: number;
     private limitRightX: number;
@@ -15,17 +15,18 @@ export class Box extends Phaser.Sprite {
         this.anchor.setTo(.5,.5);
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
-        this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
         this.body.setSize(18, 16, 8, 16);
         this.animations.add('left', [23, 24, 25, 26], 10, true);
         this.animations.add('right', [0, 1, 2, 3], 10, true);
 
         this.facing = 'left';
+        this.body.allowGravity = false;
 
         this.body.velocity.set(0, 0);
         this.body.immovable = true;
         this.body.moves = false;
+
 
         game.add.existing(this);
     }
