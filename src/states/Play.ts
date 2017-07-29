@@ -10,14 +10,16 @@ import {Door} from "../Door";
 export default class Play extends Phaser.State
 {
     private blackout: boolean = false;
-    private level: Level;
+    private changingLevel = false;
+    private levels: Level[];
+    private levelNumber: number = 0;
     private hero: Hero;
     private box: Box;
     private door: Door;
     private map;
     private layer;
     private background;
-    private debug: boolean = true;
+    private debug: boolean = false;
     // private briefingText : Phaser.BitmapText;
 
     public create()
@@ -35,9 +37,35 @@ export default class Play extends Phaser.State
         // this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
         // this.briefingText.fixedToCamera = true;
 
-        this.level = new Level(new Phaser.Point(5, 700));
+        this.levels = [
+            new Level(1, new Phaser.Point(5, 700), new Phaser.Point(1200, 700)),
+            new Level(2, new Phaser.Point(5, 700), new Phaser.Point(1100, 550))
+        ];
 
-        this.map = this.game.add.tilemap('level1');
+        this.startNewLevel();
+        this.game.camera.follow(this.hero);
+
+        SoundManager.instance.send('InitRoomtone', ['bang']);
+    }
+
+    private startNewLevel()
+    {
+        if (this.changingLevel == true && this.blackout == true) {
+            return;
+        }
+        this.changingLevel = true;
+        const level = this.levels[this.levelNumber];
+        this.levelNumber++;
+
+        if (this.hero) {
+            this.hero.destroy(true);
+            this.box.destroy(true);
+            this.door.destroy(true);
+        }
+
+
+
+        this.map = this.game.add.tilemap('level'+this.levelNumber);
         this.map.addTilesetImage('tiles-1');
         this.map.setCollision(
             [
@@ -56,12 +84,13 @@ export default class Play extends Phaser.State
         this.layer.resizeWorld();
         this.game.physics.arcade.gravity.y = 350;
 
-        this.hero = new Hero(this.game, this.level.getStartPosition().x, this.level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
-        this.box = new Box(this.game, 1200, 700, 'gnome', 0);
-        this.door = new Door(this.game, this.level.getStartPosition().x, this.level.getStartPosition().y, 'gnome', 0);
-        this.game.camera.follow(this.hero);
+        this.hero = new Hero(this.game, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
+        this.box = new Box(this.game, level.getBoxPosition().x, level.getBoxPosition().y, 'gnome', 0);
+        this.door = new Door(this.game, level.getStartPosition().x, level.getStartPosition().y, 'gnome', 0);
 
-        SoundManager.instance.send('InitRoomtone', ['bang']);
+        this.blackout = false;
+        this.changingLevel = false;
+
     }
 
     public update()
@@ -85,6 +114,7 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.collide(this.hero, this.door, function () {
             if (this.blackout) {
                console.log('nex level');
+               this.startNewLevel()
             }
         }.bind(this), null, this);
     }
