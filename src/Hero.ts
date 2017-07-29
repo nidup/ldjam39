@@ -10,6 +10,7 @@ export class Hero extends Phaser.Sprite {
     private jumpTimer = 0;
     private facing = 'right';
     private dancing = false;
+    public wasOnFloor = true;
     public walkingFloorIndex = 0;
 
     constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
@@ -42,20 +43,18 @@ export class Hero extends Phaser.Sprite {
 
     public update ()
     {
+        var isWalking = false;
         this.body.velocity.x = 0;
+
+        if (!this.body.onFloor() && this.wasOnFloor === true) {
+            this.wasOnFloor = false;
+        }
 
         this.updateSoundPan();
 
-        if (this.dancing) {
-            if (this.facing != 'dancing') {
-                this.animations.play('dancing');
-                this.facing = 'dancing';
-            }
-            return;
-        }
-
         if (this.cursorKeys.left.isDown) {
             this.body.velocity.x = -150;
+            isWalking = true;
 
             if (this.facing != 'left') {
                 this.animations.play('left');
@@ -64,6 +63,7 @@ export class Hero extends Phaser.Sprite {
 
         } else if (this.cursorKeys.right.isDown) {
             this.body.velocity.x = 150;
+            isWalking = true;
 
             if (this.facing != 'right') {
                 this.animations.play('right');
@@ -80,8 +80,12 @@ export class Hero extends Phaser.Sprite {
             }
         }
 
+        if (isWalking) {
+            SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+        }
+
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
-            SoundManager.instance.send('sample', ['bang']);
+            SoundManager.instance.send(SoundManager.ReceiverJump, [SoundManager.ActionBang]);
             this.body.velocity.y = -200;
             this.jumpTimer = this.game.time.now + 10;
         }
@@ -116,20 +120,25 @@ export class Hero extends Phaser.Sprite {
         }
 
         var textureSounds = {
-            10: 1,  // Béton
-            11: 2,  // Tole
-            12: 3,  // Carton
-            13: 4   // Eau / Flaque
+            10: SoundManager.FloorBeton,
+            11: SoundManager.FloorMetal,
+            12: SoundManager.FloorCarton,
+            13: SoundManager.FloorWater
         };
 
-        console.log('NOW WALKING ON ' + index);
+        // console.log('NOW WALKING ON ' + index);
         this.walkingFloorIndex = index;
-        SoundManager.instance.send('Texture', [textureSounds[index]]);
+        SoundManager.instance.send(SoundManager.ReceiverTexture, [textureSounds[index]]);
     }
 
     public updateSoundPan()
     {
         SoundManager.instance.send('pos', [this.x / 1280]);
+    }
+
+    public lands()
+    {
+        SoundManager.instance.send(SoundManager.ReceiverLand, [SoundManager.ActionBang]);
     }
 
     private restartLevel() {

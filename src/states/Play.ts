@@ -90,13 +90,18 @@ export default class Play extends Phaser.State
 
         this.blackout = false;
         this.changingLevel = false;
-
     }
 
     public update()
     {
         this.game.physics.arcade.collide(this.hero, this.layer, function (hero: Hero, tile) {
             hero.changeFloor(tile.index);
+
+            // Handle the fact that the hero may be in the air, so, handle landing
+            if (!hero.wasOnFloor && !hero.body.onWall()) {
+                hero.lands();
+                hero.wasOnFloor = true;
+            }
         });
         this.hero.update();
 
@@ -104,7 +109,7 @@ export default class Play extends Phaser.State
         this.box.update();
 
         this.game.physics.arcade.collide(this.hero, this.box, function () {
-            SoundManager.instance.send('sample', ['bang']);
+            SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
             this.box.destroy();
             var s = this.game.add.sprite(0, 0, 'blackout');
             s.alpha = 0.75;
