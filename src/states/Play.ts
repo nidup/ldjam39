@@ -26,11 +26,12 @@ export default class Play extends Phaser.State {
         }
         this.game.stage.backgroundColor = '#000000';
 
+        /*
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-day');
         this.background.loadTexture('background-night');
         this.background.fixedToCamera = true;
-
+*/
         this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
         this.briefingText.fixedToCamera = true;
 
@@ -53,7 +54,7 @@ export default class Play extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 350;
 
-        this.hero = new Hero(this.game, 50, 370, 'king', 0, this.game.input.keyboard);
+        this.hero = new Hero(this.game, 50, 70, 'king', 0, this.game.input.keyboard);
         this.game.camera.follow(this.hero);
 
         this.snakes = new Array();
@@ -87,10 +88,11 @@ export default class Play extends Phaser.State {
         this.game.physics.arcade.collide(this.hero, this.layer);
         this.hero.update();
 
+        /*
         if (this.hero.y > this.seaLevel) {
             this.briefingText.text = 'Argh! I\'m drowing!!';
             this.hero.drown();
-        }
+        }*/
 
         if (this.levelProgress.isFinished()) {
             this.briefingText.text = 'Yeahhhh!! Profit!!!! You finished the game :D';
