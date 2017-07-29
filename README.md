@@ -5,9 +5,14 @@ Tole            2
 Carton          3
 Eau / Flaque    4
 
-Actions
+Receivers
 =======
+InitRoomtone
+Texture
 StartWalk
 StopWalk
 Jump
 Land (envoyer la texture sur laquelle on atterit)
+Shutdown
+Box
+Win
