@@ -3,7 +3,7 @@ export default class Preload extends Phaser.State {
 
     public preload ()
     {
-        this.load.tilemap('level1', 'assets/forrest/level2.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level1', 'assets/forrest/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-1', 'assets/forrest/tiles.png');
         this.load.spritesheet('nude', 'assets/forrest/nude.png', 32, 32);
         this.load.spritesheet('king', 'assets/forrest/king.png', 32, 32);
@@ -13,6 +13,7 @@ export default class Preload extends Phaser.State {
         this.load.image('background-day', 'assets/forrest/background-day.png');
         this.load.image('background-night', 'assets/forrest/background-night.png');
         this.load.bitmapFont('carrier-command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
+        this.load.image('blackout', 'assets/blackout.png');
     }
 
     public create ()

@@ -9,6 +9,7 @@ export class Hero extends Phaser.Sprite {
     private jumpTimer = 0;
     private facing = 'right';
     private dancing = false;
+    public walkingTileIndex = 0;
 
     constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
         super(game, x, y, key, frame);
@@ -20,11 +21,11 @@ export class Hero extends Phaser.Sprite {
         this.anchor.setTo(.5,.5);
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
-        this.body.bounce.y = 0.2;
+        this.body.bounce.y = 0.0;
         this.body.collideWorldBounds = true;
         this.body.setCircle(13, 2, 6);
 
-        this.scale.set(2,2);
+        // this.scale.set(2,2);
 
         this.animations.add('idle-left', [23], 10, true);
         this.animations.add('left', [23, 24, 25, 26], 10, true);
@@ -41,6 +42,9 @@ export class Hero extends Phaser.Sprite {
     public update ()
     {
         this.body.velocity.x = 0;
+
+        // Send pos for pan sound
+        Pd.send('pos', [this.x / 1280]);
 
         if (this.dancing) {
             if (this.facing != 'dancing') {
@@ -77,8 +81,9 @@ export class Hero extends Phaser.Sprite {
         }
 
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
+            Pd.send('sample', ['bang']);
             this.body.velocity.y = -150;
-            this.jumpTimer = this.game.time.now + 750;
+            this.jumpTimer = this.game.time.now + 10;
         }
     }
 

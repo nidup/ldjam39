@@ -2,11 +2,13 @@
 import {Hero} from "../Hero";
 import {Snake} from "../Snake";
 import {Gnome} from "../Gnome";
+import {Box} from "../Box";
 import LevelProgress from "../LevelProgress";
 
 export default class Play extends Phaser.State {
 
     private hero: Hero;
+    private box: Box;
     private snakes: Array<Snake>;
     private gnomes: Array<Gnome>;
     private levelProgress: LevelProgress;
@@ -40,7 +42,7 @@ export default class Play extends Phaser.State {
         this.map.setCollision(
             [
                 1, 2, 3, 4, 5, 6, 7,
-                12, 13,
+                12, 13, 17,
                 21, 22, 23, 24, 25, 26, 27,
                 32, 33
             ]
@@ -54,19 +56,21 @@ export default class Play extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 350;
 
-        this.hero = new Hero(this.game, 50, 70, 'king', 0, this.game.input.keyboard);
+        this.hero = new Hero(this.game, 5, 5, 'king', 0, this.game.input.keyboard);
         this.game.camera.follow(this.hero);
 
         this.snakes = new Array();
-        this.snakes[0] = new Snake(this.game, 330, 370, 'snake', 0);
-        this.snakes[1] = new Snake(this.game, 750, 250, 'snake', 0);
-        this.snakes[2] = new Snake(this.game, 1050, 250, 'snake', 0);
+        // this.snakes[0] = new Snake(this.game, 330, 370, 'snake', 0);
+        // this.snakes[1] = new Snake(this.game, 750, 250, 'snake', 0);
+        // this.snakes[2] = new Snake(this.game, 1050, 250, 'snake', 0);
 
         this.gnomes = new Array();
-        this.gnomes[0] = new Gnome(this.game, 210, 200, 'gnome', 0);
-        this.gnomes[1] = new Gnome(this.game, 530, 370, 'gnome', 0);
-        this.gnomes[2] = new Gnome(this.game, 1550, 370, 'gnome', 0);
-        this.gnomes[3] = new Gnome(this.game, 1750, 370, 'gnome', 0);
+        // this.gnomes[0] = new Gnome(this.game, 210, 200, 'gnome', 0);
+        // this.gnomes[1] = new Gnome(this.game, 530, 370, 'gnome', 0);
+        // this.gnomes[2] = new Gnome(this.game, 1550, 370, 'gnome', 0);
+        // this.gnomes[3] = new Gnome(this.game, 1750, 370, 'gnome', 0);
+
+        this.box = new Box(this.game, 1200, 5, 'gnome', 0);
 
         this.levelProgress = new LevelProgress(this.gnomes, this.hero);
 
@@ -81,11 +85,19 @@ export default class Play extends Phaser.State {
         this.coinRightEmitter.setXSpeed(-100, -500);
         this.coinRightEmitter.setYSpeed(-50, 50);
         this.coinRightEmitter.makeParticles('coin', [0, 1, 2, 3, 4, 5, 6, 7]);
+
+        Pd.send('initRoomtone', ['bang']);
     }
 
     public update()
     {
-        this.game.physics.arcade.collide(this.hero, this.layer);
+        this.game.physics.arcade.collide(this.hero, this.layer, function (hero: Hero, tile) {
+            if(hero.walkingTileIndex != tile.index) {
+                hero.walkingTileIndex = tile.index;
+                console.log('NOW WALKING ON ' + tile.index);
+            }
+            // console.log(tile.index);
+        });
         this.hero.update();
 
         /*
@@ -115,6 +127,14 @@ export default class Play extends Phaser.State {
             this.gnomes[i].update();
             this.game.physics.arcade.overlap(this.hero, this.gnomes[i], this.steal, null, this);
         }
+
+        this.game.physics.arcade.collide(this.box, this.layer);
+        this.box.update();
+        this.game.physics.arcade.collide(this.hero, this.box, function () {
+            Pd.send('sample', ['bang']);
+            this.box.destroy();
+            this.game.add.image(0, 0, 'blackout');
+        }, null, this);
     }
 
     public bite (hero: Hero, snake: Snake)
@@ -145,6 +165,7 @@ export default class Play extends Phaser.State {
             for (let i = 0; i < this.snakes.length; i++) {
                 this.game.debug.body(this.snakes[i]);
             }
+            this.game.debug.body(this.box);
 
             this.game.debug.text(
                 "FPS: "  + this.game.time.fps + " ",
