@@ -31,6 +31,8 @@ export default class SoundManager {
     public soundWalkCarton;
     public soundWalkWater;
 
+    private isWalking = false;
+
     constructor(game: Phaser.Game) {
         this.Pd = window.Pd;
         this.game = game;
@@ -52,20 +54,17 @@ export default class SoundManager {
     {
         switch (receiver) {
             case SoundManager.ReceiverTexture:
-                return this.currentFloorType = parameters[0];
+                this.currentFloorType = parameters[0];
+                if (this.isWalking) {
+                    SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
+                    SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+                }
+
+                return;
             case SoundManager.ReceiverLand:
                 return;
-                // switch (this.currentFloorType) {
-                //     case SoundManager.FloorBeton:
-                //         return this.soundWalkBeton.play();
-                //     case SoundManager.FloorMetal:
-                //         return this.soundWalkMetal.play();
-                //     case SoundManager.FloorCarton:
-                //         return this.soundWalkCarton.play();
-                //     case SoundManager.FloorWater:
-                //     // return this.soundWalkWater.play();
-                // }
             case SoundManager.ReceiverStartWalk:
+                this.isWalking = true;
                 switch (this.currentFloorType) {
                     case SoundManager.FloorBeton:
                         return this.soundWalkBeton.loopFull();
@@ -77,6 +76,7 @@ export default class SoundManager {
                         // return this.soundWalkWater.loopFull();
                 }
             case SoundManager.ReceiverStopWalk:
+                this.isWalking = false;
                 this.soundWalkBeton.stop();
                 this.soundWalkMetal.stop();
                 this.soundWalkCarton.stop();

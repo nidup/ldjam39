@@ -104,7 +104,7 @@ export class Hero extends Phaser.Sprite {
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
 
             SoundManager.instance.send(SoundManager.ReceiverJump, [SoundManager.ActionBang]);
-            this.body.velocity.y = -400;
+            this.body.velocity.y = -500;
             this.jumpTimer = this.game.time.now + 100;
 
             if (this.facing == 'left') {

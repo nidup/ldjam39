@@ -83,6 +83,8 @@ export default class Play extends Phaser.State
             this.hero.glasses.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
+            this.map.destroy();
+            this.layer.destroy();
             this.door.nightDoor.destroy(true);
         }
 
