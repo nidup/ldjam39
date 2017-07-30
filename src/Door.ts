@@ -16,7 +16,7 @@ export class Door extends Phaser.Sprite {
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
         this.body.collideWorldBounds = true;
-        this.body.setSize(18, 16, 8, 16);
+        this.body.setSize(40, 80, 6, 16);
         this.animations.add('left', [23, 24, 25, 26], 10, true);
         this.animations.add('right', [0, 1, 2, 3], 10, true);
 

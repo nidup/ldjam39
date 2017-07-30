@@ -17,6 +17,11 @@ export class Level
         return this.startPosition;
     }
 
+    public getDoorPosition()
+    {
+        return new Phaser.Point(this.startPosition.x - 45, this.startPosition.y-2);
+    }
+
     public getBoxPosition()
     {
         return this.boxPosition;
