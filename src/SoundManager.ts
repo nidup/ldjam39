@@ -18,6 +18,8 @@ export default class SoundManager {
     static ReceiverShutdown = 'Shutdown';
     static ReceiverBox = 'Box';
     static ReceiverWin = 'Win';
+    static ReceiverLadderStart = 'Ladder';
+    static ReceiverLadderStop = 'LadderStop';
 
     static ActionBang = 'bang';
     static FloorBeton: number = 1;
@@ -30,6 +32,8 @@ export default class SoundManager {
     public soundWalkBeton;
     public soundWalkMetal;
     public soundWalkCarton;
+    public soundLadder;
+
     public soundPickup;
     public soundShutdown;
 
@@ -55,6 +59,7 @@ export default class SoundManager {
         this.soundWalkMetal = this.game.add.audio('walkMetal');
         this.soundWalkBeton = this.game.add.audio('walkBeton');
         this.soundWalkCarton = this.game.add.audio('walkCarton');
+        this.soundLadder = this.game.add.audio('ladder');
         this.soundDay = this.game.add.audio('day');
         this.soundNight = this.game.add.audio('night');
 
@@ -123,6 +128,10 @@ export default class SoundManager {
             case SoundManager.ReceiverNight:
                 this.soundDay.stop();
                 return this.soundNight.loopFull(5);
+            case SoundManager.ReceiverLadderStart:
+                return this.soundLadder.loopFull(3);
+            case SoundManager.ReceiverLadderStop:
+                return this.soundLadder.stop();
         }
 
         // this.Pd.send(receiver, parameters);
