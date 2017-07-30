@@ -55,7 +55,7 @@ export default class Play extends Phaser.State
 
         this.levels = [
             new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728)),
-            new Level(2, new Phaser.Point(80, 700), new Phaser.Point(1100, 550)),
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728)),
             new Level(3, new Phaser.Point(80, 700), new Phaser.Point(1200, 700))
         ];
 
@@ -77,6 +77,7 @@ export default class Play extends Phaser.State
         if (this.hero) {
             this.blackoutSprite.destroy(true);
             this.hero.destroy(true);
+            this.hero.glasses.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
         }

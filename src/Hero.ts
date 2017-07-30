@@ -13,7 +13,7 @@ export class Hero extends Phaser.Sprite {
     public wasOnFloor = true;
     public walkingFloorIndex = 0;
 
-    private glasses: Phaser.Sprite;
+    public glasses: Phaser.Sprite;
 
     constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
         super(dayGroup.game, x, y, key, frame);
@@ -99,7 +99,7 @@ export class Hero extends Phaser.Sprite {
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
 
             SoundManager.instance.send(SoundManager.ReceiverJump, [SoundManager.ActionBang]);
-            this.body.velocity.y = -300;
+            this.body.velocity.y = -400;
             this.jumpTimer = this.game.time.now + 100;
 
             if (this.facing == 'left') {
