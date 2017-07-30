@@ -20,6 +20,7 @@ export default class SoundManager {
     static ReceiverWin = 'Win';
     static ReceiverLadderStart = 'Ladder';
     static ReceiverLadderStop = 'LadderStop';
+    static ReceiverDoor = 'Door';
 
     static ActionBang = 'bang';
     static FloorBeton: number = 1;
@@ -47,6 +48,8 @@ export default class SoundManager {
     private soundsEvent = [];
     private nextEventTime = 0;
 
+    private soundDoor;
+
     private isWalking = false;
 
     constructor(game: Phaser.Game) {
@@ -62,6 +65,7 @@ export default class SoundManager {
         this.soundLadder = this.game.add.audio('ladder');
         this.soundDay = this.game.add.audio('day');
         this.soundNight = this.game.add.audio('night');
+        this.soundDoor = this.game.add.audio('door');
 
         for (var i = 0; i < 4; i++) {
             this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
@@ -132,6 +136,8 @@ export default class SoundManager {
                 return this.soundLadder.loopFull(3);
             case SoundManager.ReceiverLadderStop:
                 return this.soundLadder.stop();
+            case SoundManager.ReceiverDoor:
+                return this.soundDoor.play('', 0, 4);
         }
 
         // this.Pd.send(receiver, parameters);

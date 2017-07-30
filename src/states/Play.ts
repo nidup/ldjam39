@@ -83,12 +83,14 @@ export default class Play extends Phaser.State
         // end of game
         if (!this.levels[levelNum]) {
 
+            this.retryText.destroy();
             this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
             this.transitionSprite.alpha = 1;
-            this.transitionText = this.game.add.bitmapText(210, 330, 'carrier-command', 'ENDDDD', 26);
+            this.transitionText = this.game.add.bitmapText(210, 330, 'carrier-command', 'Arf. I hate fridays.', 26);
             this.transitionText.alpha = 0;
 
             this.door.close();
+            SoundManager.instance.send(SoundManager.ReceiverDoor, null);
 
             const endOfGameTween = this.game.add.tween(this.transitionText).to( { alpha: 1 }, 10000, "Linear", true);
 
