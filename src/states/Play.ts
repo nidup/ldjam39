@@ -93,7 +93,7 @@ export default class Play extends Phaser.State
             ]
         );
 
-        this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer = this.map.createLayer('Tile Layer 1', 1280, 800, this.groundLayer);
         if (this.debug) {
             this.layer.debug = true;
         }
