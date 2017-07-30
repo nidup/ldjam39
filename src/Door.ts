@@ -6,7 +6,9 @@ export class Door extends Phaser.Sprite {
     private distance: number = 30;
     private facing: string;
 
-    constructor(group: Phaser.Group, x: number, y: number, key: string, frame: number) {
+    public nightDoor: Phaser.Sprite;
+
+    constructor(group: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, key: string, frame: number) {
         super(group.game, x, y, key, frame);
 
         this.limitLeftX = x - this.distance;
@@ -28,6 +30,21 @@ export class Door extends Phaser.Sprite {
         this.body.moves = false;
 
         group.add(this);
+
+        this.nightDoor = this.game.add.sprite(this.x - 25, this.y - 50, 'door', 0, nightGroup);
+        this.nightDoor.animations.add('idle', [2, 3], 0.5, true);
+        this.nightDoor.animations.play('idle');
+        this.nightDoor.alpha = 0;
+    }
+
+    public byDay()
+    {
+        this.nightDoor.alpha = 0;
+    }
+
+    public byNight()
+    {
+        this.nightDoor.alpha = 1;
     }
 
     public update ()

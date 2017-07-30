@@ -83,6 +83,7 @@ export default class Play extends Phaser.State
             this.hero.glasses.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
+            this.door.nightDoor.destroy(true);
         }
 
         this.map = this.game.add.tilemap('level'+level.getNum());
@@ -106,7 +107,7 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.gravity.y = 350;
 
         this.box = new Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
-        this.door = new Door(this.dayLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
+        this.door = new Door(this.dayLayer, this.nightLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
         this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 
         this.blackout = false;
@@ -136,6 +137,8 @@ export default class Play extends Phaser.State
             this.blackoutSprite.alpha = 1;
             this.blackout = true;
             this.hero.byNight();
+
+            this.door.byNight();
         }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
@@ -151,6 +154,7 @@ export default class Play extends Phaser.State
             this.game.debug.body(this.hero);
             this.game.debug.body(this.box);
             this.game.debug.body(this.door);
+            this.game.debug.body(this.door.nightDoor);
             this.game.debug.text(
                 "FPS: "  + this.game.time.fps + " ",
                 2,
