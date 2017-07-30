@@ -19,6 +19,13 @@ export default class Play extends Phaser.State
     private background;
     private debug: boolean = false;
     //private briefingText : Phaser.BitmapText;
+    private blackoutSprite: Phaser.Sprite;
+
+    private backgroundLayer: Phaser.Group;
+    private groundLayer: Phaser.Group;
+    private dayLayer: Phaser.Group;
+    private blackoutLayer: Phaser.Group;
+    private nightLayer: Phaser.Group;
 
     public create()
     {
@@ -27,8 +34,19 @@ export default class Play extends Phaser.State
         }
         this.game.stage.backgroundColor = '#9badb7';
 
+        this.backgroundLayer = this.game.add.group();
+        this.backgroundLayer.name = 'Background';
+        this.groundLayer = this.game.add.group();
+        this.groundLayer.name = 'Ground';
+        this.dayLayer = this.game.add.group();
+        this.dayLayer.name = 'ItemsDay';
+        this.blackoutLayer = this.game.add.group();
+        this.blackoutLayer.name = 'Blackout';
+        this.nightLayer = this.game.add.group();
+        this.nightLayer.name = 'ItemsNight';
+
 //        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
-        this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background');
+        this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background', 0, this.backgroundLayer);
         this.background.loadTexture('background');
 //        this.background.fixedToCamera = true;
 
@@ -57,6 +75,7 @@ export default class Play extends Phaser.State
         this.levelNumber++;
 
         if (this.hero) {
+            this.blackoutSprite.destroy(true);
             this.hero.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
@@ -81,12 +100,14 @@ export default class Play extends Phaser.State
         this.layer.resizeWorld();
         this.game.physics.arcade.gravity.y = 350;
 
-        this.box = new Box(this.game, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
-        this.door = new Door(this.game, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
-        this.hero = new Hero(this.game, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
+        this.box = new Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
+        this.door = new Door(this.dayLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
+        this.hero = new Hero(this.dayLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 
         this.blackout = false;
         this.changingLevel = false;
+
+        console.log(this.game.world.children);
     }
 
     public update()
@@ -108,10 +129,10 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.collide(this.hero, this.box, function () {
             SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
             this.box.destroy();
-            var s = this.game.add.sprite(0, 0, 'blackout');
-            s.alpha = 0.75;
+            this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
+            this.blackoutSprite.alpha = 0.75;
             this.blackout = true;
-        }, null, this);
+        }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
             if (this.blackout) {

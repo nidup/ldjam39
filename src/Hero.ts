@@ -13,15 +13,15 @@ export class Hero extends Phaser.Sprite {
     public wasOnFloor = true;
     public walkingFloorIndex = 0;
 
-    constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
-        super(game, x, y, key, frame);
+    constructor(group: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
+        super(group.game, x, y, key, frame);
 
         this.originX = x;
         this.originY = y;
         this.finishX = x;
 
         this.anchor.setTo(.5,.5);
-        game.physics.enable(this, Phaser.Physics.ARCADE);
+        group.game.physics.enable(this, Phaser.Physics.ARCADE);
 
         this.body.bounce.y = 0.0;
         this.body.collideWorldBounds = true;
@@ -38,8 +38,7 @@ export class Hero extends Phaser.Sprite {
         this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
         this.animations.add('jump-left', [23, 22, 21, 20], 6, false);
 
-
-        game.add.existing(this);
+        group.add(this);
 
         this.cursorKeys = keyboard.createCursorKeys();
         this.jumpingKey = keyboard.addKey(Phaser.KeyCode.SPACEBAR);

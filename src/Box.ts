@@ -6,14 +6,14 @@ export class Box extends Phaser.Sprite {
     private distance: number = 30;
     private facing: string;
 
-    constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number) {
-        super(game, x, y, key, frame);
+    constructor(group: Phaser.Group, x: number, y: number, key: string, frame: number) {
+        super(group.game, x, y, key, frame);
 
         this.limitLeftX = x - this.distance;
         this.limitRightX = x + this.distance;
 
         this.anchor.setTo(.5,.5);
-        game.physics.enable(this, Phaser.Physics.ARCADE);
+        group.game.physics.enable(this, Phaser.Physics.ARCADE);
 
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
@@ -28,7 +28,7 @@ export class Box extends Phaser.Sprite {
         this.body.immovable = true;
         this.body.moves = false;
 
-        game.add.existing(this);
+        group.add(this);
     }
 
     public update ()
