@@ -9,6 +9,8 @@ export class Hero extends Phaser.Sprite {
     private jumpingKey: Phaser.Key;
     private jumpTimer = 0;
     private climbingKey: Phaser.Key;
+    private climbMaxY : number;
+    private climbing: boolean = false;
     private facing = 'right';
     public wasOnFloor = false;
     public wasWalking = false;
@@ -115,19 +117,21 @@ export class Hero extends Phaser.Sprite {
 
             this.animations.currentAnim.onComplete.addOnce(function(){
                 this.animations.play(this.facing);
-                console.log('ee');
             }.bind(this));
-        }
-
-        const ladderTop = this.walkingFloorIndex == 41;
-        if (ladderTop) {
-            console.log('echelle haut');
         }
 
         const ladderBottom = this.walkingFloorIndex == 71;
         if (ladderBottom && this.climbingKey.isDown) {
-            console.log('echelle bas');
-            this.body.velocity.y = -150;
+            if (!this.climbing && this.body.onFloor()) {
+                this.climbing = true;
+                this.climbMaxY = this.y - 150;
+            }
+            if (this.y < this.climbMaxY) {
+                this.body.velocity.y = 0;
+                this.climbing = false;
+            } else if (this.climbing) {
+                this.body.velocity.y = -150;
+            }
         }
 
         this.glasses.x = this.body.x - 10;

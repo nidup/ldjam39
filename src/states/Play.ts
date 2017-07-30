@@ -140,7 +140,6 @@ export default class Play extends Phaser.State
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
             if (this.blackout) {
-               console.log('nex level');
                this.startNewLevel()
             }
         }.bind(this), null, this);
