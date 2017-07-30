@@ -65,6 +65,7 @@ export class Hero extends Phaser.Sprite {
     public update ()
     {
         if (this.answering) {
+            SoundManager.instance.send(SoundManager.ReceiverStopWalk, null);
             this.animations.play('idle-left');
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
