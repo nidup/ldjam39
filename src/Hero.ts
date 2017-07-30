@@ -183,7 +183,9 @@ export class Hero extends Phaser.Sprite {
             6: SoundManager.FloorBeton,
 
             // METAL
+            24: SoundManager.FloorMetal,
             25: SoundManager.FloorMetal,
+            26: SoundManager.FloorMetal,
 
             // CARTON
             42: SoundManager.FloorCarton,
@@ -210,7 +212,7 @@ export class Hero extends Phaser.Sprite {
     public updateWalkingState()
     {
         if (!this.body.onFloor()) {
-            console.log('STOP WALKING');
+            // console.log('STOP WALKING');
             SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
             this.wasWalking = false;
             return;
@@ -218,14 +220,14 @@ export class Hero extends Phaser.Sprite {
 
         // Remember if he was walking
         if (this.body.deltaAbsX() > 0 && !this.wasWalking) {
-            console.log('START WALKING');
+            // console.log('START WALKING');
             SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
             this.wasWalking = true;
             return;
         }
 
         if (this.body.deltaAbsX() == 0 && this.wasWalking) {
-            console.log('STOP WALKING');
+            // console.log('STOP WALKING');
             SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
             this.wasWalking = false;
             return;

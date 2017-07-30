@@ -8,7 +8,8 @@ export default class SoundManager {
     private game;
     static instance: SoundManager;
 
-    static ReceiverInitRoomtone = 'InitRoomtone';
+    static ReceiverDay = 'Day';
+    static ReceiverNight = 'Night';
     static ReceiverTexture = 'Texture';
     static ReceiverStartWalk = 'StartWalk';
     static ReceiverStopWalk = 'StopWalk';
@@ -36,6 +37,12 @@ export default class SoundManager {
     private soundsLandBeton = [];
     private soundsLandCarton = [];
 
+    private soundDay;
+    private soundNight;
+
+    private soundsEvent = [];
+    private nextEventTime = 0;
+
     private isWalking = false;
 
     constructor(game: Phaser.Game) {
@@ -48,11 +55,17 @@ export default class SoundManager {
         this.soundWalkMetal = this.game.add.audio('walkMetal');
         this.soundWalkBeton = this.game.add.audio('walkBeton');
         this.soundWalkCarton = this.game.add.audio('walkCarton');
+        this.soundDay = this.game.add.audio('day');
+        this.soundNight = this.game.add.audio('night');
 
         for (var i = 0; i < 4; i++) {
             this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
             this.soundsLandBeton.push(this.game.add.audio('land_beton_' + i));
             this.soundsLandCarton.push(this.game.add.audio('land_carton_' + i));
+        }
+
+        for (var i = 0; i < 6; i++) {
+            this.soundsEvent.push(this.game.add.audio('event_' + i));
         }
 
         this.soundPickup = this.game.add.audio('pickup');
@@ -91,11 +104,11 @@ export default class SoundManager {
                 this.isWalking = true;
                 switch (this.currentFloorType) {
                     case SoundManager.FloorBeton:
-                        return this.soundWalkBeton.loopFull();
+                        return this.soundWalkBeton.loopFull(4);
                     case SoundManager.FloorMetal:
-                        return this.soundWalkMetal.loopFull();
+                        return this.soundWalkMetal.loopFull(4);
                     case SoundManager.FloorCarton:
-                        return this.soundWalkCarton.loopFull();
+                        return this.soundWalkCarton.loopFull(4);
                 }
                 return;
             case SoundManager.ReceiverStopWalk:
@@ -104,8 +117,27 @@ export default class SoundManager {
                 this.soundWalkMetal.stop();
                 this.soundWalkCarton.stop();
                 return;
+            case SoundManager.ReceiverDay:
+                this.soundNight.stop();
+                return this.soundDay.loopFull(5);
+            case SoundManager.ReceiverNight:
+                this.soundDay.stop();
+                return this.soundNight.loopFull(5);
         }
 
         // this.Pd.send(receiver, parameters);
+    }
+
+    public playRandomEvent()
+    {
+        if (this.game.time.now >= this.nextEventTime) {
+            var min = 12;
+            var max = 25;
+            let randSound = Math.floor(Math.random() * (6));
+            let randNext = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            this.soundsEvent[randSound].play('', 0, 0.7);
+            this.nextEventTime = this.game.time.now + (randNext * 1000);
+        }
     }
 }

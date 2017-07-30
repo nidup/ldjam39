@@ -4,6 +4,7 @@ import {Box} from "../Box";
 import SoundManager from "../SoundManager";
 import {Level} from "../Level";
 import {Door} from "../Door";
+import Sound = Phaser.Sound;
 
 export default class Play extends Phaser.State
 {
@@ -56,7 +57,8 @@ export default class Play extends Phaser.State
             new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm'),
             new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm'),
             new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm'),
-            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/28/07 4:59 pm')
+            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/28/07 4:59 pm'),
+            new Level(5, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm')
         ];
 
         this.startNewLevel();
@@ -74,6 +76,9 @@ export default class Play extends Phaser.State
 
         const level = this.levels[this.levelNumber];
         this.levelNumber++;
+
+        // Launc day sound
+        SoundManager.instance.send(SoundManager.ReceiverDay, null);
 
         // create transition screen
         this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
@@ -149,6 +154,7 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.collide(this.hero, this.box, function () {
             SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
             SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.ReceiverNight, null);
             this.box.destroy();
             this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
             this.blackoutSprite.alpha = 1;
@@ -162,6 +168,8 @@ export default class Play extends Phaser.State
                this.startNewLevel()
             }
         }.bind(this), null, this);
+
+        SoundManager.instance.playRandomEvent();
     }
 
     public render()

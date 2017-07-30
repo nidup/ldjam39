@@ -8,6 +8,7 @@ export default class Preload extends Phaser.State {
         this.load.tilemap('level2', 'assets/forrest/level2.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level3', 'assets/forrest/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level4', 'assets/forrest/level4.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level5', 'assets/forrest/level5.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-1', 'assets/forrest/tiles.png');
         this.load.spritesheet('nude', 'assets/forrest/nude.png', 32, 32);
         this.load.spritesheet('lionel', 'assets/forrest/lionel-big.png', 64, 64);
@@ -39,11 +40,22 @@ export default class Preload extends Phaser.State {
         this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.wav');
         this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.wav');
 
-        this.load.audio('walkMetal', 'assets/sounds/metal.wav');
-        this.load.audio('walkBeton', 'assets/sounds/beton.wav');
-        this.load.audio('walkCarton', 'assets/sounds/carton.wav');
+        this.load.audio('walkMetal', 'assets/sounds/STEP_TOLE_LOOP.wav');
+        this.load.audio('walkBeton', 'assets/sounds/STEP_BETON_LOOP.wav');
+        this.load.audio('walkCarton', 'assets/sounds/STEP_CARTON_LOOP.wav');
+
+        this.load.audio('day', 'assets/sounds/AMBDAY.wav');
+        this.load.audio('night', 'assets/sounds/AMBNIGHT.wav');
+
         this.load.audio('shutdown', 'assets/sounds/SHUTDOWN.wav');
         this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.wav');
+
+        this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.wav');
+        this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.wav');
+        this.load.audio('event_2', 'assets/sounds/AMB_EVENT03.wav');
+        this.load.audio('event_3', 'assets/sounds/AMB_EVENT04.wav');
+        this.load.audio('event_4', 'assets/sounds/AMB_EVENT05.wav');
+        this.load.audio('event_5', 'assets/sounds/AMB_EVENT06.wav');
     }
 
     public create ()
