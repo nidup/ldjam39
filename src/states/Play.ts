@@ -22,6 +22,8 @@ export default class Play extends Phaser.State
     private debug: boolean = false;
     private transitionSprite: Phaser.Sprite;
     private transitionText : Phaser.BitmapText;
+    private retryText : Phaser.BitmapText;
+    private retryKey: Phaser.Key;
     private blackoutSprite: Phaser.Sprite;
 
     private backgroundLayer: Phaser.Group;
@@ -62,21 +64,22 @@ export default class Play extends Phaser.State
             new Level(5, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm')
         ];
 
-        this.startNewLevel();
+        this.startLevel(0);
         this.game.camera.follow(this.hero);
+
+        this.retryKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
 
         SoundManager.instance.send('InitRoomtone', ['bang']);
     }
 
-    private startNewLevel()
+    private startLevel(levelNum: number)
     {
         if (this.changingLevel == true && this.blackout == true) {
             return;
         }
         this.changingLevel = true;
 
-        const level = this.levels[this.levelNumber];
-        this.levelNumber++;
+        const level = this.levels[levelNum];
 
         // Launc day sound
         SoundManager.instance.send(SoundManager.ReceiverDay, null);
@@ -95,6 +98,7 @@ export default class Play extends Phaser.State
             this.hero.answerText.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
+            this.retryText.destroy(true);
             this.map.destroy();
             this.layer.destroy();
             this.door.nightDoor.destroy(true);
@@ -143,6 +147,10 @@ export default class Play extends Phaser.State
 
     public update()
     {
+        if (this.retryKey.isDown) {
+            this.retryLevel();
+        }
+
         this.game.physics.arcade.collide(this.hero, this.layer, function (hero: Hero, tile) {
             hero.changeFloor(tile.index);
 
@@ -171,17 +179,28 @@ export default class Play extends Phaser.State
                 SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
                 SoundManager.instance.send(SoundManager.ReceiverNight, null);
 
+                this.retryText = this.game.add.bitmapText(50, 50, 'carrier-command','(Press R to retry this level)', 10);
+                this.fadein(this.retryText);
+
             }.bind(this), this.hero);
 
         }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
             if (this.blackout) {
-               this.startNewLevel()
+                this.levelNumber++;
+               this.startLevel(this.levelNumber)
             }
         }.bind(this), null, this);
 
         SoundManager.instance.playRandomEvent();
+    }
+
+    public retryLevel()
+    {
+        if (this.blackout) {
+            this.startLevel(this.levelNumber);
+        }
     }
 
     public render()
@@ -198,5 +217,11 @@ export default class Play extends Phaser.State
                 "#00ff00"
             );
         }
+    }
+
+    private fadein(text)
+    {
+        text.alpha = 0.1;
+        this.game.add.tween(text).to( { alpha: 1 }, 2000, "Linear", true);
     }
 }
