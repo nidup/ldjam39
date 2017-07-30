@@ -33,8 +33,14 @@ export class Door extends Phaser.Sprite {
 
         this.nightDoor = this.game.add.sprite(this.x - 25, this.y - 50, 'door', 0, nightGroup);
         this.nightDoor.animations.add('idle', [2, 3], 0.5, true);
+        this.nightDoor.animations.add('close', [4, 5], 0.5, true);
         this.nightDoor.animations.play('idle');
         this.nightDoor.alpha = 0;
+    }
+
+    public close()
+    {
+        this.nightDoor.animations.play('close');
     }
 
     public byDay()

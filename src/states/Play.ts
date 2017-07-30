@@ -79,7 +79,27 @@ export default class Play extends Phaser.State
         }
         this.changingLevel = true;
 
-        const level = this.levels[levelNum];
+        // end of game
+        if (!this.levels[levelNum]) {
+
+            this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
+            this.transitionSprite.alpha = 1;
+            this.transitionText = this.game.add.bitmapText(210, 330, 'carrier-command', 'ENDDDD', 26);
+            this.transitionText.alpha = 0;
+
+            this.door.close();
+
+            const endOfGameTween = this.game.add.tween(this.transitionText).to( { alpha: 1 }, 10000, "Linear", true);
+
+            endOfGameTween.onComplete.addOnce(
+                function(){
+                    window.location.reload(true);
+                }.bind(this));
+            return;
+        }
+
+        // next level
+        const level = this.levels[this.levelNumber];
 
         // Launc day sound
         SoundManager.instance.send(SoundManager.ReceiverDay, null);
@@ -92,19 +112,7 @@ export default class Play extends Phaser.State
 
         // kill everything
         if (this.hero) {
-            this.blackoutSprite.destroy(true);
-            this.hero.destroy(true);
-            this.hero.glasses.destroy(true);
-            this.hero.answerText.destroy(true);
-            this.box.destroy(true);
-            this.door.destroy(true);
-            this.retryText.destroy(true);
-            this.map.destroy();
-            this.layer.destroy();
-            this.door.nightDoor.destroy(true);
-            this.colleague.destroy(true);
-            this.colleague.weekendText1.destroy(true);
-            this.colleague.weekendText2.destroy(true);
+            this.killThemAll();
         }
 
         // create the level
@@ -143,6 +151,23 @@ export default class Play extends Phaser.State
                 this.blackout = false;
                 this.changingLevel = false;
             }.bind(this));
+    }
+
+    private killThemAll()
+    {
+        this.blackoutSprite.destroy(true);
+        this.hero.destroy(true);
+        this.hero.glasses.destroy(true);
+        this.hero.answerText.destroy(true);
+        this.box.destroy(true);
+        this.door.destroy(true);
+        this.map.destroy();
+        this.layer.destroy();
+        this.door.nightDoor.destroy(true);
+        this.colleague.destroy(true);
+        this.colleague.weekendText1.destroy(true);
+        this.colleague.weekendText2.destroy(true);
+        this.retryText.destroy(true);
     }
 
     public update()
