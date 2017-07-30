@@ -45,6 +45,9 @@ export default class Play extends Phaser.State
         this.nightLayer = this.game.add.group();
         this.nightLayer.name = 'ItemsNight';
 
+        SoundManager.instance = new SoundManager(this.game);
+        SoundManager.instance.init();
+
 //        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
         this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background', 0, this.backgroundLayer);
         this.background.loadTexture('background');
@@ -129,7 +132,7 @@ export default class Play extends Phaser.State
             SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
             this.box.destroy();
             this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
-            this.blackoutSprite.alpha = 0.95;
+            this.blackoutSprite.alpha = 1;
             this.blackout = true;
             this.hero.byNight();
         }.bind(this), null, this);

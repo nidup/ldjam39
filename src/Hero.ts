@@ -9,8 +9,8 @@ export class Hero extends Phaser.Sprite {
     private jumpingKey: Phaser.Key;
     private jumpTimer = 0;
     private facing = 'right';
-    private dancing = false;
-    public wasOnFloor = true;
+    public wasOnFloor = false;
+    public wasWalking = false;
     public walkingFloorIndex = 0;
 
     public glasses: Phaser.Sprite;
@@ -57,11 +57,13 @@ export class Hero extends Phaser.Sprite {
         var isWalking = false;
         this.body.velocity.x = 0;
 
+        this.updateSoundPan();
+        this.updateWalkingState();
+
+        // Remember if he was in the AIR
         if (!this.body.onFloor() && this.wasOnFloor === true) {
             this.wasOnFloor = false;
         }
-
-        this.updateSoundPan();
 
         if (this.cursorKeys.left.isDown) {
             this.body.velocity.x = -150;
@@ -93,7 +95,7 @@ export class Hero extends Phaser.Sprite {
         }
 
         if (isWalking) {
-            SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+            // SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
         }
 
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
@@ -131,14 +133,6 @@ export class Hero extends Phaser.Sprite {
         this.glasses.alpha = 1;
     }
 
-    public biten () {
-        this.restartLevel();
-    }
-
-    public drown () {
-        this.restartLevel();
-    }
-
     public changeOriginPosition() {
         this.originX = this.x;
         this.originY = this.y;
@@ -148,11 +142,6 @@ export class Hero extends Phaser.Sprite {
         return this.x < this.finishX;
     }
 
-    public dance () {
-        this.x = this.x + 1; // TODO: dirty hack to raise coins emitter
-        this.dancing = true;
-    }
-
     public changeFloor(index)
     {
         if (index == this.walkingFloorIndex) {
@@ -160,9 +149,17 @@ export class Hero extends Phaser.Sprite {
         }
 
         var textureSounds = {
-            10: SoundManager.FloorBeton,
-            11: SoundManager.FloorMetal,
-            12: SoundManager.FloorCarton,
+            // BETON
+            4: SoundManager.FloorBeton,
+            5: SoundManager.FloorBeton,
+            6: SoundManager.FloorBeton,
+
+            // METAL
+            25: SoundManager.FloorMetal,
+
+            // CARTON
+            42: SoundManager.FloorCarton,
+
             13: SoundManager.FloorWater
         };
 
@@ -174,6 +171,31 @@ export class Hero extends Phaser.Sprite {
     public updateSoundPan()
     {
         SoundManager.instance.send('pos', [this.x / 1280]);
+    }
+
+    public updateWalkingState()
+    {
+        if (!this.body.onFloor()) {
+            console.log('STOP WALKING');
+            SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
+            this.wasWalking = false;
+            return;
+        }
+
+        // Remember if he was walking
+        if (this.body.deltaAbsX() > 0 && !this.wasWalking) {
+            console.log('START WALKING');
+            SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+            this.wasWalking = true;
+            return;
+        }
+
+        if (this.body.deltaAbsX() == 0 && this.wasWalking) {
+            console.log('STOP WALKING');
+            SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
+            this.wasWalking = false;
+            return;
+        }
     }
 
     public lands()
