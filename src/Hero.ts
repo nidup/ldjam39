@@ -143,6 +143,8 @@ export class Hero extends Phaser.Sprite {
             } else if (this.climbing && (this.x > this.climbMinX || this.x < this.climbMaxX)) {
                 this.body.velocity.y = -150;
             }
+        } else {
+            SoundManager.instance.send(SoundManager.ReceiverLadderStop, null);
         }
 
         this.glasses.x = this.body.x - 10;
