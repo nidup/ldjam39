@@ -93,7 +93,8 @@ export default class Play extends Phaser.State
                 12, 13, 17,
                 21, 22, 23, 24, 25, 26, 27,
                 32, 33,
-                42
+                42, // box
+                71 // under ladder
             ]
         );
 

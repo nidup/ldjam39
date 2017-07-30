@@ -8,6 +8,7 @@ export class Hero extends Phaser.Sprite {
     private cursorKeys: Phaser.CursorKeys;
     private jumpingKey: Phaser.Key;
     private jumpTimer = 0;
+    private climbingKey: Phaser.Key;
     private facing = 'right';
     public wasOnFloor = false;
     public wasWalking = false;
@@ -43,7 +44,7 @@ export class Hero extends Phaser.Sprite {
 
         this.cursorKeys = keyboard.createCursorKeys();
         this.jumpingKey = keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-
+        this.climbingKey = keyboard.addKey(Phaser.KeyCode.UP);
 
         this.glasses = this.game.add.sprite(this.x, this.y, 'glasses', 0, nightGroup);
         this.glasses.animations.add('idle-right', [0, 1], 2, true);
@@ -111,6 +112,22 @@ export class Hero extends Phaser.Sprite {
                 this.animations.play('jump-right');
                 this.facing = 'right';
             }
+
+            this.animations.currentAnim.onComplete.addOnce(function(){
+                this.animations.play(this.facing);
+                console.log('ee');
+            }.bind(this));
+        }
+
+        const ladderTop = this.walkingFloorIndex == 41;
+        if (ladderTop) {
+            console.log('echelle haut');
+        }
+
+        const ladderBottom = this.walkingFloorIndex == 71;
+        if (ladderBottom && this.climbingKey.isDown) {
+            console.log('echelle bas');
+            this.body.velocity.y = -150;
         }
 
         this.glasses.x = this.body.x - 10;
@@ -121,6 +138,7 @@ export class Hero extends Phaser.Sprite {
         } else if (this.facing == 'right') {
             this.glasses.animations.play('idle-right');
         }
+
     }
 
     public byDay()
@@ -160,7 +178,13 @@ export class Hero extends Phaser.Sprite {
             // CARTON
             42: SoundManager.FloorCarton,
 
-            13: SoundManager.FloorWater
+            13: SoundManager.FloorWater,
+
+            // LADDER TOP
+            41: SoundManager.FloorMetal,
+
+            // LADDER BOTTOM
+            71: SoundManager.FloorMetal
         };
 
         // console.log('NOW WALKING ON ' + index);
