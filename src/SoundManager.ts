@@ -30,6 +30,8 @@ export default class SoundManager {
     public soundWalkMetal;
     public soundWalkCarton;
     public soundWalkWater;
+    public soundPickup;
+    public soundShutdown;
 
     private isWalking = false;
 
@@ -40,22 +42,25 @@ export default class SoundManager {
 
     public init ()
     {
-        // $.get('assets/puredata/MAINAMBv1.pd', function(main) {
-            // this.Pd.loadPatch(main);
-            // this.Pd.start();
+        // $.get('assets/puredata/MAINAMBv3.pd', function(main) {
+        //     this.Pd.loadPatch(main);
+        //     this.Pd.start();
         // }.bind(this));
 
         this.soundWalkMetal = this.game.add.audio('walkMetal');
         this.soundWalkBeton = this.game.add.audio('walkBeton');
         this.soundWalkCarton = this.game.add.audio('walkCarton');
+        this.soundPickup = this.game.add.audio('pickup');
+        this.soundShutdown = this.game.add.audio('shutdown');
     }
 
     public send(receiver: String, parameters: any)
     {
         switch (receiver) {
             case SoundManager.ReceiverTexture:
+                var changedFloor = this.currentFloorType != parameters[0];
                 this.currentFloorType = parameters[0];
-                if (this.isWalking) {
+                if (this.isWalking && changedFloor) {
                     SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
                     SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
                 }
@@ -63,6 +68,10 @@ export default class SoundManager {
                 return;
             case SoundManager.ReceiverLand:
                 return;
+            case SoundManager.ReceiverBox:
+                return this.soundPickup.play();
+            case SoundManager.ReceiverShutdown:
+                return this.soundShutdown.play();
             case SoundManager.ReceiverStartWalk:
                 this.isWalking = true;
                 switch (this.currentFloorType) {

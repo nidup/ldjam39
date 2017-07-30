@@ -25,6 +25,8 @@ export default class Preload extends Phaser.State {
         this.load.audio('walkMetal', 'assets/sounds/metal.wav');
         this.load.audio('walkBeton', 'assets/sounds/beton.wav');
         this.load.audio('walkCarton', 'assets/sounds/carton.wav');
+        this.load.audio('shutdown', 'assets/sounds/SHUTDOWN.wav');
+        this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.wav');
     }
 
     public create ()
