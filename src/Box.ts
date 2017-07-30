@@ -18,8 +18,9 @@ export class Box extends Phaser.Sprite {
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
         this.body.setSize(18, 16, 8, 16);
-        this.animations.add('left', [23, 24, 25, 26], 10, true);
-        this.animations.add('right', [0, 1, 2, 3], 10, true);
+        this.animations.add('blink', [0, 1, 2], 3, true);
+
+        this.animations.play('blink');
 
         this.facing = 'left';
 

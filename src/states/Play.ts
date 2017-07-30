@@ -36,7 +36,7 @@ export default class Play extends Phaser.State
         //this.briefingText.fixedToCamera = true;
 
         this.levels = [
-            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 700)),
+            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728)),
             new Level(2, new Phaser.Point(80, 700), new Phaser.Point(1100, 550)),
             new Level(3, new Phaser.Point(80, 700), new Phaser.Point(1200, 700))
         ];
@@ -62,8 +62,6 @@ export default class Play extends Phaser.State
             this.door.destroy(true);
         }
 
-
-
         this.map = this.game.add.tilemap('level'+level.getNum());
         this.map.addTilesetImage('tiles-1');
         this.map.setCollision(
@@ -83,7 +81,7 @@ export default class Play extends Phaser.State
         this.layer.resizeWorld();
         this.game.physics.arcade.gravity.y = 350;
 
-        this.box = new Box(this.game, level.getBoxPosition().x, level.getBoxPosition().y, 'gnome', 0);
+        this.box = new Box(this.game, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
         this.door = new Door(this.game, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
         this.hero = new Hero(this.game, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 

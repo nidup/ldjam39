@@ -17,8 +17,8 @@ export class Door extends Phaser.Sprite {
 
         this.body.collideWorldBounds = true;
         this.body.setSize(40, 80, 6, 16);
-        this.animations.add('left', [23, 24, 25, 26], 10, true);
-        this.animations.add('right', [0, 1, 2, 3], 10, true);
+        this.animations.add('idle', [0, 1], 0.5, true);
+        this.animations.play('idle');
 
         this.facing = 'left';
         this.body.allowGravity = false;
