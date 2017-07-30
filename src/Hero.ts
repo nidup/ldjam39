@@ -10,6 +10,8 @@ export class Hero extends Phaser.Sprite {
     private jumpTimer = 0;
     private climbingKey: Phaser.Key;
     private climbMaxY : number;
+    private climbMinX : number;
+    private climbMaxX : number;
     private climbing: boolean = false;
     private facing = 'right';
     public wasOnFloor = false;
@@ -125,11 +127,15 @@ export class Hero extends Phaser.Sprite {
             if (ladderBottom && !this.climbing && this.body.onFloor()) {
                 this.climbing = true;
                 this.climbMaxY = this.y - 150;
+                this.climbMinX = this.x - 5;
+                this.climbMaxX = this.x + 5;
             }
-            if (this.y < this.climbMaxY) {
-                this.body.velocity.y = 0;
+            if (this.y < this.climbMaxY || this.x < this.climbMinX || this.x > this.climbMaxX) {
+                this.body.velocity.y = +400;
+                this.body.velocity.x = 0;
                 this.climbing = false;
-            } else if (this.climbing) {
+
+            } else if (this.climbing && (this.x > this.climbMinX || this.x < this.climbMaxX)) {
                 this.body.velocity.y = -150;
             }
         }
