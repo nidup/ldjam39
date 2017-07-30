@@ -19,19 +19,22 @@ export default class SoundManager {
     static ReceiverWin = 'Win';
 
     static ActionBang = 'bang';
-    static FloorBeton = 1;
-    static FloorMetal = 2;
-    static FloorCarton = 3;
-    static FloorWater = 4;
+    static FloorBeton: number = 1;
+    static FloorMetal: number = 2;
+    static FloorCarton: number = 3;
+    static FloorWater: number = 4;
 
-    public currentFloorType;
+    public currentFloorType: number;
 
     public soundWalkBeton;
     public soundWalkMetal;
     public soundWalkCarton;
-    public soundWalkWater;
     public soundPickup;
     public soundShutdown;
+
+    private soundsLandMetal = [];
+    private soundsLandBeton = [];
+    private soundsLandCarton = [];
 
     private isWalking = false;
 
@@ -42,14 +45,16 @@ export default class SoundManager {
 
     public init ()
     {
-        // $.get('assets/puredata/MAINAMBv3.pd', function(main) {
-        //     this.Pd.loadPatch(main);
-        //     this.Pd.start();
-        // }.bind(this));
-
         this.soundWalkMetal = this.game.add.audio('walkMetal');
         this.soundWalkBeton = this.game.add.audio('walkBeton');
         this.soundWalkCarton = this.game.add.audio('walkCarton');
+
+        for (var i = 0; i < 4; i++) {
+            this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
+            this.soundsLandBeton.push(this.game.add.audio('land_beton_' + i));
+            this.soundsLandCarton.push(this.game.add.audio('land_carton_' + i));
+        }
+
         this.soundPickup = this.game.add.audio('pickup');
         this.soundShutdown = this.game.add.audio('shutdown');
     }
@@ -67,6 +72,16 @@ export default class SoundManager {
 
                 return;
             case SoundManager.ReceiverLand:
+                console.log('LANDING');
+                var rand = Math.floor(Math.random() * (3));
+                switch (this.currentFloorType) {
+                    case SoundManager.FloorBeton:
+                        return this.soundsLandBeton[rand].play();
+                    case SoundManager.FloorMetal:
+                        return this.soundsLandMetal[rand].play();
+                    case SoundManager.FloorCarton:
+                        return this.soundsLandCarton[rand].play();
+                }
                 return;
             case SoundManager.ReceiverBox:
                 return this.soundPickup.play();
@@ -81,9 +96,8 @@ export default class SoundManager {
                         return this.soundWalkMetal.loopFull();
                     case SoundManager.FloorCarton:
                         return this.soundWalkCarton.loopFull();
-                    case SoundManager.FloorWater:
-                        // return this.soundWalkWater.loopFull();
                 }
+                return;
             case SoundManager.ReceiverStopWalk:
                 this.isWalking = false;
                 this.soundWalkBeton.stop();

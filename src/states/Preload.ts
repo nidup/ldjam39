@@ -24,6 +24,21 @@ export default class Preload extends Phaser.State {
         this.load.bitmapFont('carrier-command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
         this.load.image('blackout', 'assets/blackout.png');
 
+        this.load.audio('land_metal_0', 'assets/sounds/LAND_TOLE04.wav');
+        this.load.audio('land_metal_1', 'assets/sounds/LAND_TOLE01.wav');
+        this.load.audio('land_metal_2', 'assets/sounds/LAND_TOLE02.wav');
+        this.load.audio('land_metal_3', 'assets/sounds/LAND_TOLE03.wav');
+
+        this.load.audio('land_carton_0', 'assets/sounds/LAND_CARTON04.wav');
+        this.load.audio('land_carton_1', 'assets/sounds/LAND_CARTON01.wav');
+        this.load.audio('land_carton_2', 'assets/sounds/LAND_CARTON02.wav');
+        this.load.audio('land_carton_3', 'assets/sounds/LAND_CARTON03.wav');
+
+        this.load.audio('land_beton_0', 'assets/sounds/LAND_BETON04.wav');
+        this.load.audio('land_beton_1', 'assets/sounds/LAND_BETON01.wav');
+        this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.wav');
+        this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.wav');
+
         this.load.audio('walkMetal', 'assets/sounds/metal.wav');
         this.load.audio('walkBeton', 'assets/sounds/beton.wav');
         this.load.audio('walkCarton', 'assets/sounds/carton.wav');
