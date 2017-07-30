@@ -24,6 +24,11 @@ export class Level
         return new Phaser.Point(this.startPosition.x - 45, this.startPosition.y-2);
     }
 
+    public getColleaguePosition()
+    {
+        return new Phaser.Point(this.startPosition.x - 50, this.startPosition.y + 5);
+    }
+
     public getBoxPosition()
     {
         return this.boxPosition;

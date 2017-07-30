@@ -1,10 +1,10 @@
 
+import {Colleague} from "../Colleague";
 import {Hero} from "../Hero";
 import {Box} from "../Box";
 import SoundManager from "../SoundManager";
 import {Level} from "../Level";
 import {Door} from "../Door";
-import Sound = Phaser.Sound;
 
 export default class Play extends Phaser.State
 {
@@ -13,6 +13,7 @@ export default class Play extends Phaser.State
     private levels: Level[];
     private levelNumber: number = 0;
     private hero: Hero;
+    private colleague: Colleague;
     private box: Box;
     private door: Door;
     private map;
@@ -96,6 +97,9 @@ export default class Play extends Phaser.State
             this.map.destroy();
             this.layer.destroy();
             this.door.nightDoor.destroy(true);
+            this.colleague.destroy(true);
+            this.colleague.weekendText1.destroy(true);
+            this.colleague.weekendText2.destroy(true);
         }
 
         // create the level
@@ -122,6 +126,7 @@ export default class Play extends Phaser.State
         this.box = new Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
         this.door = new Door(this.dayLayer, this.nightLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
         this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
+        this.colleague = new Colleague(this.dayLayer, level.getColleaguePosition().x, level.getColleaguePosition().y, 'michel', 0);
 
         // make the level appears
         const duration = 4000;
@@ -152,15 +157,21 @@ export default class Play extends Phaser.State
         this.box.update();
 
         this.game.physics.arcade.collide(this.hero, this.box, function () {
-            SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
-            SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
-            SoundManager.instance.send(SoundManager.ReceiverNight, null);
+
             this.box.destroy();
-            this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
-            this.blackoutSprite.alpha = 1;
-            this.blackout = true;
-            this.hero.byNight();
-            this.door.byNight();
+
+            this.colleague.switchOffTheLight(function() {
+                this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
+                this.blackoutSprite.alpha = 1;
+                this.blackout = true;
+                this.hero.byNight();
+                this.door.byNight();
+                SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
+                SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
+                SoundManager.instance.send(SoundManager.ReceiverNight, null);
+
+            }.bind(this));
+
         }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
