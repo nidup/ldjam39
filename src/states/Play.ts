@@ -77,6 +77,7 @@ export default class Play extends Phaser.State
         if (this.changingLevel == true && this.blackout == true) {
             return;
         }
+
         this.changingLevel = true;
 
         const level = this.levels[levelNum];
@@ -187,9 +188,9 @@ export default class Play extends Phaser.State
         }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {
-            if (this.blackout) {
+            if (this.blackout && !this.changingLevel) {
                 this.levelNumber++;
-               this.startLevel(this.levelNumber)
+                this.startLevel(this.levelNumber)
             }
         }.bind(this), null, this);
 
