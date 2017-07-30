@@ -121,8 +121,8 @@ export class Hero extends Phaser.Sprite {
         }
 
         const ladderBottom = this.walkingFloorIndex == 71;
-        if (ladderBottom && this.climbingKey.isDown) {
-            if (!this.climbing && this.body.onFloor()) {
+        if (this.climbingKey.isDown) {
+            if (ladderBottom && !this.climbing && this.body.onFloor()) {
                 this.climbing = true;
                 this.climbMaxY = this.y - 150;
             }
