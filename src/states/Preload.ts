@@ -9,6 +9,7 @@ export default class Preload extends Phaser.State {
         this.load.image('tiles-1', 'assets/forrest/tiles.png');
         this.load.spritesheet('nude', 'assets/forrest/nude.png', 32, 32);
         this.load.spritesheet('lionel', 'assets/forrest/lionel-big.png', 64, 64);
+        this.load.spritesheet('lionel', 'assets/forrest/lionel-glasses.png', 64, 64);
         this.load.spritesheet('door', 'assets/forrest/door.png', 60, 100);
         this.load.spritesheet('box', 'assets/forrest/box.png', 20, 20);
         this.load.spritesheet('king', 'assets/forrest/king.png', 32, 32);
