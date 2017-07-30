@@ -92,6 +92,7 @@ export default class Play extends Phaser.State
             this.blackoutSprite.destroy(true);
             this.hero.destroy(true);
             this.hero.glasses.destroy(true);
+            this.hero.answerText.destroy(true);
             this.box.destroy(true);
             this.door.destroy(true);
             this.map.destroy();
@@ -170,7 +171,7 @@ export default class Play extends Phaser.State
                 SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
                 SoundManager.instance.send(SoundManager.ReceiverNight, null);
 
-            }.bind(this));
+            }.bind(this), this.hero);
 
         }.bind(this), null, this);
 

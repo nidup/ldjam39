@@ -18,8 +18,9 @@ export class Hero extends Phaser.Sprite {
     public wasOnFloor = false;
     public wasWalking = false;
     public walkingFloorIndex = 0;
-
+    public answerText : Phaser.BitmapText;
     public glasses: Phaser.Sprite;
+    private answering: boolean = false;
 
     constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
         super(dayGroup.game, x, y, key, frame);
@@ -56,10 +57,20 @@ export class Hero extends Phaser.Sprite {
         this.glasses.animations.add('idle-left', [2, 3], 2, true);
         this.glasses.animations.play('idle-right');
         this.glasses.alpha = 0;
+
+        this.answerText = this.game.add.bitmapText(210, 330, 'carrier-command', 'YES!', 10, dayGroup);
+        this.answerText.alpha = 0;
     }
 
     public update ()
     {
+        if (this.answering) {
+            this.animations.play('idle-left');
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            return;
+        }
+
         var isWalking = false;
         this.body.velocity.x = 0;
 
@@ -156,6 +167,19 @@ export class Hero extends Phaser.Sprite {
             this.glasses.animations.play('idle-right');
         }
 
+    }
+
+    public answer()
+    {
+        this.answering = true;
+        this.answerText.alpha = 1;
+        this.answerText.x = this.x - 40;
+        this.answerText.y = this.y - 50;
+        const duration = 6000;
+        const tweenText = this.game.add.tween(this.answerText).to( { alpha: 0.5 }, duration, "Linear", true);
+        tweenText.onComplete.addOnce(function(){
+            this.answering = false;
+        }.bind(this));
     }
 
     public byDay()

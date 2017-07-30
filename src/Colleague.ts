@@ -29,7 +29,7 @@ export class Colleague extends Phaser.Sprite {
         dayGroup.add(this);
     }
 
-    public switchOffTheLight (onceSwitchedOffCallback)
+    public switchOffTheLight (onceSwitchedOffCallback, hero)
     {
         this.alpha = 1;
         this.animations.play('right');
@@ -42,6 +42,9 @@ export class Colleague extends Phaser.Sprite {
             this.weekendText1.y = this.y - 50;
             const duration = 4000;
             const tweenText = this.game.add.tween(this.weekendText1).to( { alpha: 0.5 }, duration, "Linear", true);
+
+            hero.answer();
+
             tweenText.onComplete.addOnce(function(){
                 this.weekendText1.alpha = 0;
                 this.weekendText2.alpha = 1;
