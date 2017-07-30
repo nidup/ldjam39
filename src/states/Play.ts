@@ -60,7 +60,7 @@ export default class Play extends Phaser.State
             new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm'),
             new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm'),
             new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm'),
-            new Level(5, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/28/07 4:59 pm'),
+            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 2017/28/07 4:59 pm'),
             new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm')
         ];
 
