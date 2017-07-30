@@ -102,12 +102,10 @@ export default class Play extends Phaser.State
 
         this.box = new Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
         this.door = new Door(this.dayLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
-        this.hero = new Hero(this.dayLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
+        this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 
         this.blackout = false;
         this.changingLevel = false;
-
-        console.log(this.game.world.children);
     }
 
     public update()
@@ -130,8 +128,9 @@ export default class Play extends Phaser.State
             SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
             this.box.destroy();
             this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
-            this.blackoutSprite.alpha = 0.75;
+            this.blackoutSprite.alpha = 0.95;
             this.blackout = true;
+            this.hero.byNight();
         }.bind(this), null, this);
 
         this.game.physics.arcade.collide(this.hero, this.door, function () {

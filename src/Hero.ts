@@ -13,22 +13,23 @@ export class Hero extends Phaser.Sprite {
     public wasOnFloor = true;
     public walkingFloorIndex = 0;
 
-    constructor(group: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
-        super(group.game, x, y, key, frame);
+    private glasses: Phaser.Sprite;
+
+    constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
+        super(dayGroup.game, x, y, key, frame);
 
         this.originX = x;
         this.originY = y;
         this.finishX = x;
 
         this.anchor.setTo(.5,.5);
-        group.game.physics.enable(this, Phaser.Physics.ARCADE);
+        dayGroup.game.physics.enable(this, Phaser.Physics.ARCADE);
 
         this.body.bounce.y = 0.0;
         this.body.collideWorldBounds = true;
         this.body.setSize(20, 60, 10, 4);
 
         this.body.gravity.y = 1000;
-
 
         this.animations.add('idle-right', [0, 1], 2, true);
         this.animations.add('idle-left', [2, 3], 4, true);
@@ -38,10 +39,17 @@ export class Hero extends Phaser.Sprite {
         this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
         this.animations.add('jump-left', [23, 22, 21, 20], 6, false);
 
-        group.add(this);
+        dayGroup.add(this);
 
         this.cursorKeys = keyboard.createCursorKeys();
         this.jumpingKey = keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+
+
+        this.glasses = this.game.add.sprite(this.x, this.y, 'glasses', 0, nightGroup);
+        this.glasses.animations.add('idle-right', [0, 1], 2, true);
+        this.glasses.animations.add('idle-left', [2, 3], 2, true);
+        this.glasses.animations.play('idle-right');
+        this.glasses.alpha = 0;
     }
 
     public update ()
@@ -102,6 +110,25 @@ export class Hero extends Phaser.Sprite {
                 this.facing = 'right';
             }
         }
+
+        this.glasses.x = this.body.x - 10;
+        this.glasses.y = this.body.y - 5;
+
+        if (this.facing == 'left') {
+            this.glasses.animations.play('idle-left');
+        } else if (this.facing == 'right') {
+            this.glasses.animations.play('idle-right');
+        }
+    }
+
+    public byDay()
+    {
+        this.glasses.alpha = 0;
+    }
+
+    public byNight()
+    {
+        this.glasses.alpha = 1;
     }
 
     public biten () {
