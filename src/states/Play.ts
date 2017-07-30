@@ -18,7 +18,8 @@ export default class Play extends Phaser.State
     private layer;
     private background;
     private debug: boolean = false;
-    //private briefingText : Phaser.BitmapText;
+    private transitionSprite: Phaser.Sprite;
+    private transitionText : Phaser.BitmapText;
     private blackoutSprite: Phaser.Sprite;
 
     private backgroundLayer: Phaser.Group;
@@ -48,19 +49,14 @@ export default class Play extends Phaser.State
         SoundManager.instance = new SoundManager(this.game);
         SoundManager.instance.init();
 
-//        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background-night');
         this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background', 0, this.backgroundLayer);
         this.background.loadTexture('background');
-//        this.background.fixedToCamera = true;
-
-        //this.briefingText = this.game.add.bitmapText(40, 40, 'carrier-command','Night has come, Let\'s collect underpants!', 10);
-        //this.briefingText.fixedToCamera = true;
 
         this.levels = [
-            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728)),
-            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728)),
-            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520)),
-            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723))
+            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm'),
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm'),
+            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm'),
+            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/28/07 4:59 pm')
         ];
 
         this.startNewLevel();
@@ -75,9 +71,17 @@ export default class Play extends Phaser.State
             return;
         }
         this.changingLevel = true;
+
         const level = this.levels[this.levelNumber];
         this.levelNumber++;
 
+        // create transition screen
+        this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
+        this.transitionSprite.alpha = 1;
+        this.transitionText = this.game.add.bitmapText(210, 330, 'carrier-command', level.getDay(), 26);
+        this.transitionText.alpha = 1;
+
+        // kill everything
         if (this.hero) {
             this.blackoutSprite.destroy(true);
             this.hero.destroy(true);
@@ -89,6 +93,7 @@ export default class Play extends Phaser.State
             this.door.nightDoor.destroy(true);
         }
 
+        // create the level
         this.map = this.game.add.tilemap('level'+level.getNum());
         this.map.addTilesetImage('tiles-1');
         this.map.setCollision(
@@ -113,8 +118,16 @@ export default class Play extends Phaser.State
         this.door = new Door(this.dayLayer, this.nightLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
         this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 
-        this.blackout = false;
-        this.changingLevel = false;
+        // make the level appears
+        const duration = 4000;
+        this.game.add.tween(this.transitionText).to( { alpha: 0 }, duration, "Linear", true);
+        const tween = this.game.add.tween(this.transitionSprite).to( { alpha: 0 }, duration, "Linear", true);
+
+        tween.onComplete.addOnce(
+            function(){
+                this.blackout = false;
+                this.changingLevel = false;
+            }.bind(this));
     }
 
     public update()
@@ -141,7 +154,6 @@ export default class Play extends Phaser.State
             this.blackoutSprite.alpha = 1;
             this.blackout = true;
             this.hero.byNight();
-
             this.door.byNight();
         }.bind(this), null, this);
 

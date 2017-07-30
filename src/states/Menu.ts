@@ -11,7 +11,6 @@ export default class Menu extends Phaser.State {
     private startText : Phaser.BitmapText;
     private hero: Phaser.Sprite;
     private door: Phaser.Sprite;
-    private commandText : Phaser.BitmapText;
     private map;
     private layer;
     private background;
@@ -53,7 +52,6 @@ export default class Menu extends Phaser.State {
         //  The 3000 tells it to wait for 3 seconds before starting the fade back.
         tween.yoyo(true, 1000);
 
-        
         this.authorText = this.game.add.bitmapText(680, 780, 'carrier-command','Ludum Date #39 by grena, quentin, baptiste, nidup', 10);
 
         this.hero = this.game.add.sprite(500, 577, 'lionel', 0);
