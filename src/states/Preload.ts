@@ -3,6 +3,7 @@ export default class Preload extends Phaser.State {
 
     public preload ()
     {
+        this.load.tilemap('intro', 'assets/forrest/intro.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level1', 'assets/forrest/level1.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level2', 'assets/forrest/level2.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level3', 'assets/forrest/level3.json', null, Phaser.Tilemap.TILED_JSON);
@@ -32,6 +33,6 @@ export default class Preload extends Phaser.State {
 
     public create ()
     {
-        this.game.state.start('Play');
+        this.game.state.start('Menu');
     }
 }

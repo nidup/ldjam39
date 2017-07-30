@@ -57,8 +57,8 @@ export default class Play extends Phaser.State
         //this.briefingText.fixedToCamera = true;
 
         this.levels = [
-            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728)),
             new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728)),
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728)),
             new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520))
         ];
 
