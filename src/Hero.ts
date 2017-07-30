@@ -1,5 +1,6 @@
 
 import SoundManager from "./SoundManager";
+import Sound = Phaser.Sound;
 export class Hero extends Phaser.Sprite {
 
     private originX: number;
@@ -129,11 +130,15 @@ export class Hero extends Phaser.Sprite {
                 this.climbMaxY = this.y - 150;
                 this.climbMinX = this.x - 5;
                 this.climbMaxX = this.x + 5;
+
+                SoundManager.instance.send(SoundManager.ReceiverLadderStart, null);
             }
             if (this.y < this.climbMaxY || this.x < this.climbMinX || this.x > this.climbMaxX) {
                 this.body.velocity.y = +400;
                 this.body.velocity.x = 0;
                 this.climbing = false;
+
+                SoundManager.instance.send(SoundManager.ReceiverLadderStop, null);
 
             } else if (this.climbing && (this.x > this.climbMinX || this.x < this.climbMaxX)) {
                 this.body.velocity.y = -150;
