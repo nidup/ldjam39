@@ -249,6 +249,12 @@ export default class Play extends Phaser.State
 
         this.game.physics.arcade.collide(this.rats, this.layer);
 
+        this.game.physics.arcade.collide(this.hero, this.rats, function (hero:Hero, rat: Rat) {
+            rat.dies();
+
+        }.bind(this), null, this);
+
+
         SoundManager.instance.playRandomEvent();
     }
 
