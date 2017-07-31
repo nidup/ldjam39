@@ -1,17 +1,21 @@
 
+import {RatPatrol} from "./RatPatrol";
+
 export class Level
 {
     private num: number;
     private startPosition: Phaser.Point;
-    private boxPosition: Phaser.Point
+    private boxPosition: Phaser.Point;
+    private ratPatrols: RatPatrol[];
     private day: string;
 
-    public constructor(num: number, startPosition: Phaser.Point, boxPosition: Phaser.Point, day: string)
+    public constructor(num: number, startPosition: Phaser.Point, boxPosition: Phaser.Point, day: string, ratPatrols: RatPatrol[])
     {
         this.startPosition = startPosition;
         this.boxPosition = boxPosition;
         this.num = num;
         this.day = day;
+        this.ratPatrols = ratPatrols;
     }
 
     public getStartPosition()
@@ -42,5 +46,10 @@ export class Level
     public getDay(): string
     {
         return this.day;
+    }
+
+    public getRatPatrols(): RatPatrol[]
+    {
+        return this.ratPatrols;
     }
 }

@@ -1,20 +1,19 @@
 
-export class Snake extends Phaser.Sprite {
+export class Rat extends Phaser.Sprite {
 
     private limitLeftX: number;
     private limitRightX: number;
-    private distance: number = 30;
     private speed: number = 30;
     private facing: string;
 
-    constructor(game: Phaser.Game, x: number, y: number, key: string, frame: number) {
-        super(game, x, y, key, frame);
+    constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, toX: number, key: string, frame: number) {
+        super(dayGroup.game, x, y, key, frame);
 
-        this.limitLeftX = x - this.distance;
-        this.limitRightX = x + this.distance;
+        this.limitLeftX = x;
+        this.limitRightX = toX;
 
         this.anchor.setTo(.5,.5);
-        game.physics.enable(this, Phaser.Physics.ARCADE);
+        dayGroup.game.physics.enable(this, Phaser.Physics.ARCADE);
 
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
@@ -24,7 +23,7 @@ export class Snake extends Phaser.Sprite {
 
         this.facing = 'left';
 
-        game.add.existing(this);
+        dayGroup.game.add.existing(this);
     }
 
     public update ()

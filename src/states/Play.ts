@@ -5,6 +5,8 @@ import {Box} from "../Box";
 import SoundManager from "../SoundManager";
 import {Level} from "../Level";
 import {Door} from "../Door";
+import {Rat} from "../Rat";
+import {RatPatrol} from "../RatPatrol";
 
 export default class Play extends Phaser.State
 {
@@ -16,6 +18,7 @@ export default class Play extends Phaser.State
     private colleague: Colleague;
     private box: Box;
     private door: Door;
+    private rats: Rat[] = [];
     private map;
     private layer;
     private background;
@@ -57,11 +60,11 @@ export default class Play extends Phaser.State
         this.background.loadTexture('background');
 
         this.levels = [
-            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm'),
-            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm'),
-            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm'),
-            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 2017/28/07 4:59 pm'),
-            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm')
+            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm', [new RatPatrol(500, 700, 710)]),
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm', []),
+            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm', []),
+            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 2017/28/07 4:59 pm', []),
+            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm', [])
         ];
 
         this.startLevel(0);
@@ -144,6 +147,10 @@ export default class Play extends Phaser.State
         this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
         this.colleague = new Colleague(this.dayLayer, level.getColleaguePosition().x, level.getColleaguePosition().y, 'michel', 0);
 
+        level.getRatPatrols().map(function (patrol: RatPatrol) {
+            this.rats.push(new Rat(this.dayLayer, this.nightLayer, patrol.fromX, patrol.fromY, patrol.toX, 'rat', 0));
+        }.bind(this));
+
         // make the level appears
         const duration = 4000;
         this.game.add.tween(this.transitionText).to( { alpha: 0 }, duration, "Linear", true);
@@ -171,6 +178,7 @@ export default class Play extends Phaser.State
         this.colleague.weekendText1.destroy(true);
         this.colleague.weekendText2.destroy(true);
         this.retryText.destroy(true);
+        this.rats.map(function(rat: Rat) { rat.destroy(); });
     }
 
     public update()
@@ -220,6 +228,8 @@ export default class Play extends Phaser.State
                 this.startLevel(this.levelNumber)
             }
         }.bind(this), null, this);
+
+        this.game.physics.arcade.collide(this.rats, this.layer);
 
         SoundManager.instance.playRandomEvent();
     }
