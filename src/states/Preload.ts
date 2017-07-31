@@ -3,20 +3,20 @@ export default class Preload extends Phaser.State {
 
     public preload ()
     {
-        this.load.tilemap('intro', 'assets/forrest/intro.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level1', 'assets/forrest/level1.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level2', 'assets/forrest/level2.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level3', 'assets/forrest/level3.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level4', 'assets/forrest/level4.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level5', 'assets/forrest/level5.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.image('tiles-1', 'assets/forrest/tiles.png');
-        this.load.spritesheet('lionel', 'assets/forrest/lionel-big.png', 64, 64);
-        this.load.spritesheet('michel', 'assets/forrest/michel.png', 64, 64);
-        this.load.spritesheet('glasses', 'assets/forrest/lionel-glasses.png', 64, 64);
-        this.load.spritesheet('door', 'assets/forrest/door.png', 60, 100);
-        this.load.spritesheet('box', 'assets/forrest/box.png', 20, 20);
-        this.load.spritesheet('rat', 'assets/forrest/rat.png', 32, 32);
-        this.load.image('background', 'assets/forrest/background.png');
+        this.load.tilemap('intro', 'assets/levels/intro.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level2', 'assets/levels/level2.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level3', 'assets/levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level4', 'assets/levels/level4.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level5', 'assets/levels/level5.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-1', 'assets/images/tiles.png');
+        this.load.spritesheet('lionel', 'assets/images/lionel-big.png', 64, 64);
+        this.load.spritesheet('michel', 'assets/images/michel.png', 64, 64);
+        this.load.spritesheet('glasses', 'assets/images/lionel-glasses.png', 64, 64);
+        this.load.spritesheet('door', 'assets/images/door.png', 60, 100);
+        this.load.spritesheet('box', 'assets/images/box.png', 20, 20);
+        this.load.spritesheet('rat', 'assets/images/rat.png', 32, 32);
+        this.load.image('background', 'assets/images/background.png');
         this.load.bitmapFont('carrier-command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
         this.load.image('blackout', 'assets/blackout.png');
 
