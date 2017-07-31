@@ -23,7 +23,7 @@ export class Rat extends Phaser.Sprite {
 
         this.facing = 'left';
 
-        dayGroup.game.add.existing(this);
+        dayGroup.add(this);
     }
 
     public update ()
