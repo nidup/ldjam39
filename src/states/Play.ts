@@ -7,6 +7,7 @@ import {Level} from "../Level";
 import {Door} from "../Door";
 import {Rat} from "../Rat";
 import {RatPatrol} from "../RatPatrol";
+import {Terminal} from "../Terminal";
 
 export default class Play extends Phaser.State
 {
@@ -19,6 +20,7 @@ export default class Play extends Phaser.State
     private box: Box;
     private door: Door;
     private rats: Rat[] = [];
+    private terminals: Terminal[] = [];
     private map;
     private layer;
     private background;
@@ -60,12 +62,12 @@ export default class Play extends Phaser.State
         this.background.loadTexture('background');
 
         this.levels = [
-            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 7th July 4:55 pm', [new RatPatrol(500, 700, 710)]),
-            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1215, 728), 'Friday 14th July 4:57 pm', [new RatPatrol(425, 580, 495)]),
-            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 21th July 4:51 pm', [new RatPatrol(705, 600, 910)]),
-            new Level(6, new Phaser.Point(80, 700), new Phaser.Point(630, 584), 'Friday 28th July 4:59 pm', [new RatPatrol(420, 365, 590)]),
-            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 4th August 5:01 pm', [new RatPatrol(400, 340, 540), new RatPatrol(1070, 510, 1140), new RatPatrol(530, 600, 733)]),
-            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 11th August 4:48 pm', [])
+            new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 7th July 4:55 pm', [new RatPatrol(500, 700, 710)], [new Phaser.Point(140, 704)]),
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1215, 728), 'Friday 14th July 4:57 pm', [new RatPatrol(425, 580, 495)], []),
+            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 21th July 4:51 pm', [new RatPatrol(705, 600, 910)], []),
+            new Level(6, new Phaser.Point(80, 700), new Phaser.Point(630, 584), 'Friday 28th July 4:59 pm', [new RatPatrol(420, 365, 590)], []),
+            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 4th August 5:01 pm', [new RatPatrol(400, 340, 540), new RatPatrol(1070, 510, 1140), new RatPatrol(530, 600, 733)], []),
+            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 11th August 4:48 pm', [], [])
         ];
 
         this.startLevel(0);
@@ -148,12 +150,17 @@ export default class Play extends Phaser.State
 
         this.box = new Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
         this.door = new Door(this.dayLayer, this.nightLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
-        this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
-        this.colleague = new Colleague(this.dayLayer, level.getColleaguePosition().x, level.getColleaguePosition().y, 'michel', 0);
 
         level.getRatPatrols().map(function (patrol: RatPatrol) {
             this.rats.push(new Rat(this.dayLayer, this.nightLayer, patrol.fromX, patrol.fromY, patrol.toX, 'rat', 0));
         }.bind(this));
+
+        level.getTerminalPositions().map(function (position: Phaser.Point) {
+            this.terminals.push(new Terminal(this.dayLayer, this.nightLayer, position.x, position.y, 'terminal', 0));
+        }.bind(this));
+
+        this.hero = new Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
+        this.colleague = new Colleague(this.dayLayer, level.getColleaguePosition().x, level.getColleaguePosition().y, 'michel', 0);
 
         // make the level appears
         const duration = 4000;
@@ -183,6 +190,7 @@ export default class Play extends Phaser.State
         this.colleague.weekendText2.destroy(true);
         this.retryText.destroy(true);
         this.rats.map(function(rat: Rat) { rat.destroy(); rat.eyes.destroy(true); });
+        this.terminals.map(function(terminal: Terminal) { terminal.destroy(); terminal.screen.destroy(true); });
     }
 
     public update()
@@ -218,6 +226,9 @@ export default class Play extends Phaser.State
                 this.door.byNight();
                 this.rats.map(function(rat: Rat) {
                     rat.byNight();
+                });
+                this.terminals.map(function(terminal: Terminal) {
+                    terminal.byNight();
                 });
                 SoundManager.instance.send(SoundManager.Shutdown);
                 SoundManager.instance.send(SoundManager.AmbientNight);

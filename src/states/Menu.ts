@@ -79,7 +79,7 @@ export default class Menu extends Phaser.State {
         this.box.animations.play('idle');
 
         this.rat = new Rat(this.dayLayer, this.nightLayer, 100, 720, 400, 'rat', 0);
-        this.terminal = new Terminal(this.dayLayer, this.nightLayer, 900, 709, 'terminal', 0);
+        this.terminal = new Terminal(this.dayLayer, this.nightLayer, 900, 705, 'terminal', 0);
 
 
 

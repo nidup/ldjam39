@@ -31,8 +31,11 @@ export class Terminal extends Phaser.Sprite {
 
         group.add(this);
 
-        this.screen = this.game.add.sprite(this.x - 25, this.y - 50, 'terminal', 0, nightGroup);
-        this.screen.animations.add('idle', [0, 1, 2, 3, 4], 3, true);
+        this.alpha = 1;
+
+        this.screen = this.game.add.sprite(this.x, this.y, 'terminal', 0, nightGroup);
+        this.screen.anchor.setTo(.5,.5);
+        this.screen.animations.add('idle', [4, 5, 6, 7], 3, true);
         this.screen.animations.play('idle');
         this.screen.alpha = 0;
     }
