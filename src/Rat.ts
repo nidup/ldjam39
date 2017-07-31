@@ -3,8 +3,9 @@ export class Rat extends Phaser.Sprite {
 
     private limitLeftX: number;
     private limitRightX: number;
-    private speed: number = 120;
+    private speed: number = 80;
     private facing: string;
+    private eyes: Phaser.Sprite;
 
     constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, toX: number, key: string, frame: number) {
         super(dayGroup.game, x, y, key, frame);
@@ -24,6 +25,16 @@ export class Rat extends Phaser.Sprite {
         this.facing = 'left';
 
         dayGroup.add(this);
+
+        this.eyes = this.game.add.sprite(this.x, this.y, 'rat', 0, nightGroup);
+        this.eyes.animations.add('left', [2, 3], 10, true);
+        this.eyes.animations.add('right', [2, 3], 10, true);
+        this.eyes.alpha = 0;
+    }
+
+    public byNight()
+    {
+        this.eyes.alpha = 1;
     }
 
     public update ()
@@ -41,6 +52,14 @@ export class Rat extends Phaser.Sprite {
         } else if (this.facing == 'right') {
             this.animations.play('right');
             this.body.velocity.x = this.speed;
+        }
+
+        this.eyes.x = this.body.x - 15;
+        this.eyes.y = this.body.y - 16;
+        if (this.facing == 'left') {
+            this.eyes.animations.play('left');
+        } else if (this.facing == 'right') {
+            this.eyes.animations.play('right');
         }
     }
 }

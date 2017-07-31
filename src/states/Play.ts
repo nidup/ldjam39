@@ -212,6 +212,9 @@ export default class Play extends Phaser.State
                 this.blackout = true;
                 this.hero.byNight();
                 this.door.byNight();
+                this.rats.map(function(rat: Rat) {
+                    rat.byNight();
+                });
                 SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
                 SoundManager.instance.send(SoundManager.ReceiverNight, null);
 
@@ -244,6 +247,9 @@ export default class Play extends Phaser.State
     public render()
     {
         if (this.debug) {
+            this.rats.map(function (rat: Rat) {
+                this.game.debug.body(rat);
+            }.bind((this)));
             this.game.debug.body(this.hero);
             this.game.debug.body(this.box);
             this.game.debug.body(this.door);
