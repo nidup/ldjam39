@@ -1,6 +1,4 @@
 
-declare var $: any;
-
 export default class SoundManager {
 
     private game;
