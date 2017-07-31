@@ -9,6 +9,7 @@ export default class Preload extends Phaser.State {
         this.load.tilemap('level3', 'assets/levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level4', 'assets/levels/level4.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level5', 'assets/levels/level5.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level6', 'assets/levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-1', 'assets/images/tiles.png');
         this.load.spritesheet('lionel', 'assets/images/lionel-big.png', 64, 64);
         this.load.spritesheet('michel', 'assets/images/michel.png', 64, 64);

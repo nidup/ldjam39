@@ -61,16 +61,22 @@ export default class Play extends Phaser.State
 
         this.levels = [
             new Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 7th July 4:55 pm', [new RatPatrol(500, 700, 710)]),
-            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 14th July 4:57 pm', []),
-            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 21th July 4:51 pm', []),
-            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 28th July 4:59 pm', []),
-            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 4th August 4:57 pm', [])
+            new Level(2, new Phaser.Point(80, 573), new Phaser.Point(1215, 728), 'Friday 14th July 4:57 pm', [new RatPatrol(425, 580, 495)]),
+            new Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 21th July 4:51 pm', [new RatPatrol(705, 600, 910)]),
+            new Level(6, new Phaser.Point(80, 700), new Phaser.Point(630, 584), 'Friday 28th July 4:59 pm', [new RatPatrol(420, 365, 590)]),
+            new Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 4th August 5:01 pm', [new RatPatrol(400, 340, 540), new RatPatrol(1070, 510, 1140), new RatPatrol(530, 600, 733)]),
+            new Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 11th August 4:48 pm', [])
         ];
 
         this.startLevel(0);
         this.game.camera.follow(this.hero);
 
         this.retryKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
+
+        this.game.input.onDown.add(function () {
+            console.log('X = ' + this.game.input.activePointer.worldX);
+            console.log('Y = ' + this.game.input.activePointer.worldY);
+        }, this);
     }
 
     private startLevel(levelNum: number)
