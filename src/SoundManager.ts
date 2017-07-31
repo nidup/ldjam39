@@ -17,6 +17,7 @@ export default class SoundManager {
     static StartClimbing = 'Ladder';
     static StopClimbing = 'LadderStop';
     static DoorClose = 'Door';
+    static Rat = 'Rat';
 
     static FloorBeton: number = 1;
     static FloorMetal: number = 2;
@@ -43,6 +44,7 @@ export default class SoundManager {
     private nextEventTime = 0;
 
     private soundDoor;
+    private soundRat;
 
     private isWalking = false;
 
@@ -59,6 +61,7 @@ export default class SoundManager {
         this.soundDay = this.game.add.audio('day');
         this.soundNight = this.game.add.audio('night');
         this.soundDoor = this.game.add.audio('door');
+        this.soundRat = this.game.add.audio('rat');
 
         for (var i = 0; i < 4; i++) {
             this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
@@ -130,6 +133,8 @@ export default class SoundManager {
                 return this.soundClimbing.stop();
             case SoundManager.DoorClose:
                 return this.soundDoor.play('', 0, 4);
+            case SoundManager.Rat:
+                return this.soundRat.play('', 0, 2);
         }
     }
 

@@ -1,4 +1,5 @@
 
+import SoundManager from "./SoundManager";
 export class Rat extends Phaser.Sprite {
 
     private limitLeftX: number;
@@ -55,6 +56,7 @@ export class Rat extends Phaser.Sprite {
             this.body.checkCollision.up = false;
             this.body.checkCollision.left = false;
             this.body.checkCollision.right = false;
+            SoundManager.instance.send(SoundManager.Rat);
             this.dead = true;
         }
     }

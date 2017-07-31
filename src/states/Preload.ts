@@ -49,6 +49,7 @@ export default class Preload extends Phaser.State {
         this.load.audio('door', 'assets/sounds/DOOR.mp3');
 
         this.load.audio('ladder', 'assets/sounds/ECHELLE_MONTE.mp3');
+        this.load.audio('rat', 'assets/sounds/RAT.wav');
 
         this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.mp3');
         this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.mp3');
