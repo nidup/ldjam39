@@ -21,6 +21,7 @@ export class Hero extends Phaser.Sprite {
     public answerText : Phaser.BitmapText;
     public glasses: Phaser.Sprite;
     private answering: boolean = false;
+    private night: boolean = false;
 
     constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, key: string, frame: number, keyboard: Phaser.Keyboard) {
         super(dayGroup.game, x, y, key, frame);
@@ -45,6 +46,7 @@ export class Hero extends Phaser.Sprite {
         this.animations.add('left', [15, 14, 13, 12], 6, true);
         this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
         this.animations.add('jump-left', [23, 22, 21, 20], 6, false);
+        this.animations.add('climb', [24, 25], 4, true);
 
         dayGroup.add(this);
 
@@ -143,12 +145,16 @@ export class Hero extends Phaser.Sprite {
                 this.climbMinX = this.x - 5;
                 this.climbMaxX = this.x + 5;
 
+                this.animations.play('climb');
+
                 SoundManager.instance.send(SoundManager.StartClimbing);
             }
             if (this.y < this.climbMaxY || this.x < this.climbMinX || this.x > this.climbMaxX) {
                 this.body.velocity.y = +400;
                 this.body.velocity.x = 0;
                 this.climbing = false;
+
+                this.animations.play('idle-right');
 
                 SoundManager.instance.send(SoundManager.StopClimbing);
 
@@ -157,14 +163,23 @@ export class Hero extends Phaser.Sprite {
             }
         } else {
             this.climbing = false;
+            if (this.animations.currentAnim.name == 'climb') {
+                this.animations.play('idle-right');
+            }
             SoundManager.instance.send(SoundManager.StopClimbing);
         }
 
         // Don't collide with upper tiles if climbing
         if(this.climbing) {
             this.body.checkCollision.up = false;
+            if (this.night) {
+                this.glasses.alpha = 0;
+            }
         } else {
             this.body.checkCollision.up = true;
+            if (this.night) {
+                this.glasses.alpha = 1;
+            }
         }
 
         this.glasses.x = this.body.x - 10;
@@ -199,6 +214,7 @@ export class Hero extends Phaser.Sprite {
     public byNight()
     {
         this.glasses.alpha = 1;
+        this.night = true;
     }
 
     public changeOriginPosition() {
