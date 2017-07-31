@@ -27,40 +27,40 @@ export default class Preload extends Phaser.State {
         this.load.bitmapFont('carrier-command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
         this.load.image('blackout', 'assets/blackout.png');
 
-        this.load.audio('land_metal_0', 'assets/sounds/LAND_TOLE04.wav');
-        this.load.audio('land_metal_1', 'assets/sounds/LAND_TOLE01.wav');
-        this.load.audio('land_metal_2', 'assets/sounds/LAND_TOLE02.wav');
-        this.load.audio('land_metal_3', 'assets/sounds/LAND_TOLE03.wav');
+        this.load.audio('land_metal_0', 'assets/sounds/LAND_TOLE04.mp3');
+        this.load.audio('land_metal_1', 'assets/sounds/LAND_TOLE01.mp3');
+        this.load.audio('land_metal_2', 'assets/sounds/LAND_TOLE02.mp3');
+        this.load.audio('land_metal_3', 'assets/sounds/LAND_TOLE03.mp3');
 
-        this.load.audio('land_carton_0', 'assets/sounds/LAND_CARTON04.wav');
-        this.load.audio('land_carton_1', 'assets/sounds/LAND_CARTON01.wav');
-        this.load.audio('land_carton_2', 'assets/sounds/LAND_CARTON02.wav');
-        this.load.audio('land_carton_3', 'assets/sounds/LAND_CARTON03.wav');
+        this.load.audio('land_carton_0', 'assets/sounds/LAND_CARTON04.mp3');
+        this.load.audio('land_carton_1', 'assets/sounds/LAND_CARTON01.mp3');
+        this.load.audio('land_carton_2', 'assets/sounds/LAND_CARTON02.mp3');
+        this.load.audio('land_carton_3', 'assets/sounds/LAND_CARTON03.mp3');
 
-        this.load.audio('land_beton_0', 'assets/sounds/LAND_BETON04.wav');
-        this.load.audio('land_beton_1', 'assets/sounds/LAND_BETON01.wav');
-        this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.wav');
-        this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.wav');
+        this.load.audio('land_beton_0', 'assets/sounds/LAND_BETON04.mp3');
+        this.load.audio('land_beton_1', 'assets/sounds/LAND_BETON01.mp3');
+        this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.mp3');
+        this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.mp3');
 
-        this.load.audio('walkMetal', 'assets/sounds/STEP_TOLE_LOOP.wav');
-        this.load.audio('walkBeton', 'assets/sounds/STEP_BETON_LOOP.wav');
-        this.load.audio('walkCarton', 'assets/sounds/STEP_CARTON_LOOP.wav');
+        this.load.audio('walkMetal', 'assets/sounds/STEP_TOLE_LOOP.mp3');
+        this.load.audio('walkBeton', 'assets/sounds/STEP_BETON_LOOP.mp3');
+        this.load.audio('walkCarton', 'assets/sounds/STEP_CARTON_LOOP.mp3');
 
-        this.load.audio('day', 'assets/sounds/AMBDAY.wav');
-        this.load.audio('night', 'assets/sounds/AMBNIGHT.wav');
+        this.load.audio('day', 'assets/sounds/AMBDAY.mp3');
+        this.load.audio('night', 'assets/sounds/AMBNIGHT.mp3');
 
-        this.load.audio('shutdown', 'assets/sounds/SWITCH_SHUTDOWN.wav');
-        this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.wav');
-        this.load.audio('door', 'assets/sounds/DOOR.wav');
+        this.load.audio('shutdown', 'assets/sounds/SWITCH_SHUTDOWN.mp3');
+        this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.mp3');
+        this.load.audio('door', 'assets/sounds/DOOR.mp3');
 
-        this.load.audio('ladder', 'assets/sounds/ECHELLE_MONTE.wav');
+        this.load.audio('ladder', 'assets/sounds/ECHELLE_MONTE.mp3');
 
-        this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.wav');
-        this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.wav');
-        this.load.audio('event_2', 'assets/sounds/AMB_EVENT03.wav');
-        this.load.audio('event_3', 'assets/sounds/AMB_EVENT04.wav');
-        this.load.audio('event_4', 'assets/sounds/AMB_EVENT05.wav');
-        this.load.audio('event_5', 'assets/sounds/AMB_EVENT06.wav');
+        this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.mp3');
+        this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.mp3');
+        this.load.audio('event_2', 'assets/sounds/AMB_EVENT03.mp3');
+        this.load.audio('event_3', 'assets/sounds/AMB_EVENT04.mp3');
+        this.load.audio('event_4', 'assets/sounds/AMB_EVENT05.mp3');
+        this.load.audio('event_5', 'assets/sounds/AMB_EVENT06.mp3');
     }
 
     public create ()

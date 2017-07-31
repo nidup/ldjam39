@@ -204,6 +204,7 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.collide(this.hero, this.box, function () {
 
             this.box.destroy();
+            SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
 
             this.colleague.switchOffTheLight(function() {
                 this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
@@ -211,7 +212,6 @@ export default class Play extends Phaser.State
                 this.blackout = true;
                 this.hero.byNight();
                 this.door.byNight();
-                SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
                 SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
                 SoundManager.instance.send(SoundManager.ReceiverNight, null);
 
