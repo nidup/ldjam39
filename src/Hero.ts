@@ -156,7 +156,15 @@ export class Hero extends Phaser.Sprite {
                 this.body.velocity.y = -150;
             }
         } else {
+            this.climbing = false;
             SoundManager.instance.send(SoundManager.ReceiverLadderStop, null);
+        }
+
+        // Don't collide with upper tiles if climbing
+        if(this.climbing) {
+            this.body.checkCollision.up = false;
+        } else {
+            this.body.checkCollision.up = true;
         }
 
         this.glasses.x = this.body.x - 10;
