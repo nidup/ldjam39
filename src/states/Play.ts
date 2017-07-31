@@ -176,7 +176,7 @@ export default class Play extends Phaser.State
         this.colleague.weekendText1.destroy(true);
         this.colleague.weekendText2.destroy(true);
         this.retryText.destroy(true);
-        this.rats.map(function(rat: Rat) { rat.destroy(); });
+        this.rats.map(function(rat: Rat) { rat.destroy(); rat.eyes.destroy(true); });
     }
 
     public update()

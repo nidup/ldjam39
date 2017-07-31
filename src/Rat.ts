@@ -5,7 +5,7 @@ export class Rat extends Phaser.Sprite {
     private limitRightX: number;
     private speed: number = 80;
     private facing: string;
-    private eyes: Phaser.Sprite;
+    public eyes: Phaser.Sprite;
 
     constructor(dayGroup: Phaser.Group, nightGroup: Phaser.Group, x: number, y: number, toX: number, key: string, frame: number) {
         super(dayGroup.game, x, y, key, frame);
@@ -19,16 +19,16 @@ export class Rat extends Phaser.Sprite {
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
         this.body.setSize(18, 16, 8, 16);
-        this.animations.add('left', [0,1 /*23, 24, 25, 26*/], 10, true);
-        this.animations.add('right', [0, 1/*, 2, 3*/], 10, true);
+        this.animations.add('right', [0, 1], 10, true);
+        this.animations.add('left', [4, 5], 10, true);
 
         this.facing = 'left';
 
         dayGroup.add(this);
 
         this.eyes = this.game.add.sprite(this.x, this.y, 'rat', 0, nightGroup);
-        this.eyes.animations.add('left', [2, 3], 10, true);
         this.eyes.animations.add('right', [2, 3], 10, true);
+        this.eyes.animations.add('left', [6, 7], 10, true);
         this.eyes.alpha = 0;
     }
 
