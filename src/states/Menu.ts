@@ -1,5 +1,7 @@
 
 import {Hero} from "../Hero";
+import {Rat} from "../Rat";
+import {Terminal} from "../Terminal";
 
 export default class Menu extends Phaser.State {
 
@@ -15,6 +17,10 @@ export default class Menu extends Phaser.State {
     private layer;
     private background;
     private box;
+    private rat: Rat;
+    private dayLayer;
+    private nightLayer;
+    private terminal: Terminal;
 
     public create ()
     {
@@ -62,9 +68,21 @@ export default class Menu extends Phaser.State {
         this.door.animations.add('idle', [0, 1], 0.5, true);
         this.door.animations.play('idle');
 
+
+        this.dayLayer = this.game.add.group();
+        this.dayLayer.name = 'ItemsDay';
+        this.nightLayer = this.game.add.group();
+        this.nightLayer.name = 'ItemsNight';
+
         this.box = this.game.add.sprite(1220, 590, 'box', 0);
         this.box.animations.add('idle', [0, 1, 2], 3, true);
         this.box.animations.play('idle');
+
+        this.rat = new Rat(this.dayLayer, this.nightLayer, 100, 720, 400, 'rat', 0);
+        this.terminal = new Terminal(this.dayLayer, this.nightLayer, 900, 709, 'terminal', 0);
+
+
+
     }
 
     private fadein(text)
@@ -92,5 +110,9 @@ export default class Menu extends Phaser.State {
         this.background.destroy();
         this.door.destroy();
         this.box.destroy();
+        this.rat.destroy();
+        this.rat.eyes.destroy();
+        this.terminal.destroy();
+        this.terminal.screen.destroy();
     }
 }
