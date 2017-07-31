@@ -71,8 +71,6 @@ export default class Play extends Phaser.State
         this.game.camera.follow(this.hero);
 
         this.retryKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
-
-        SoundManager.instance.send('InitRoomtone', ['bang']);
     }
 
     private startLevel(levelNum: number)
@@ -93,7 +91,7 @@ export default class Play extends Phaser.State
             this.transitionText.alpha = 0;
 
             this.door.close();
-            SoundManager.instance.send(SoundManager.ReceiverDoor, null);
+            SoundManager.instance.send(SoundManager.DoorClose);
 
             const endOfGameTween = this.game.add.tween(this.transitionText).to( { alpha: 1 }, 10000, "Linear", true);
 
@@ -108,7 +106,7 @@ export default class Play extends Phaser.State
         const level = this.levels[this.levelNumber];
 
         // Launc day sound
-        SoundManager.instance.send(SoundManager.ReceiverDay, null);
+        SoundManager.instance.send(SoundManager.AmbientDay);
 
         // create transition screen
         this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
@@ -204,7 +202,7 @@ export default class Play extends Phaser.State
         this.game.physics.arcade.collide(this.hero, this.box, function () {
 
             this.box.destroy();
-            SoundManager.instance.send(SoundManager.ReceiverBox, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.PickBox);
 
             this.colleague.switchOffTheLight(function() {
                 this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
@@ -215,8 +213,8 @@ export default class Play extends Phaser.State
                 this.rats.map(function(rat: Rat) {
                     rat.byNight();
                 });
-                SoundManager.instance.send(SoundManager.ReceiverShutdown, [SoundManager.ActionBang]);
-                SoundManager.instance.send(SoundManager.ReceiverNight, null);
+                SoundManager.instance.send(SoundManager.Shutdown);
+                SoundManager.instance.send(SoundManager.AmbientNight);
 
                 this.retryText = this.game.add.bitmapText(50, 50, 'carrier-command','(Press R to retry this level)', 10);
                 this.fadein(this.retryText);

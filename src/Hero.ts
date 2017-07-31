@@ -65,7 +65,7 @@ export class Hero extends Phaser.Sprite {
     public update ()
     {
         if (this.answering) {
-            SoundManager.instance.send(SoundManager.ReceiverStopWalk, null);
+            SoundManager.instance.send(SoundManager.StopWalk);
             this.animations.play('idle-left');
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
@@ -113,12 +113,12 @@ export class Hero extends Phaser.Sprite {
         }
 
         if (isWalking) {
-            // SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+            // SoundManager.instance.send(SoundManager.StartWalk);
         }
 
         if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
 
-            SoundManager.instance.send(SoundManager.ReceiverJump, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.Jump);
             this.body.velocity.y = -500;
             this.jumpTimer = this.game.time.now + 100;
 
@@ -143,21 +143,21 @@ export class Hero extends Phaser.Sprite {
                 this.climbMinX = this.x - 5;
                 this.climbMaxX = this.x + 5;
 
-                SoundManager.instance.send(SoundManager.ReceiverLadderStart, null);
+                SoundManager.instance.send(SoundManager.StartClimbing);
             }
             if (this.y < this.climbMaxY || this.x < this.climbMinX || this.x > this.climbMaxX) {
                 this.body.velocity.y = +400;
                 this.body.velocity.x = 0;
                 this.climbing = false;
 
-                SoundManager.instance.send(SoundManager.ReceiverLadderStop, null);
+                SoundManager.instance.send(SoundManager.StopClimbing);
 
             } else if (this.climbing && (this.x > this.climbMinX || this.x < this.climbMaxX)) {
                 this.body.velocity.y = -150;
             }
         } else {
             this.climbing = false;
-            SoundManager.instance.send(SoundManager.ReceiverLadderStop, null);
+            SoundManager.instance.send(SoundManager.StopClimbing);
         }
 
         // Don't collide with upper tiles if climbing
@@ -230,8 +230,6 @@ export class Hero extends Phaser.Sprite {
             // CARTON
             42: SoundManager.FloorCarton,
 
-            13: SoundManager.FloorWater,
-
             // LADDER TOP
             41: SoundManager.FloorMetal,
 
@@ -241,7 +239,7 @@ export class Hero extends Phaser.Sprite {
 
         // console.log('NOW WALKING ON ' + index);
         this.walkingFloorIndex = index;
-        SoundManager.instance.send(SoundManager.ReceiverTexture, [textureSounds[index]]);
+        SoundManager.instance.send(SoundManager.ChangeFloor, [textureSounds[index]]);
     }
 
     public updateSoundPan()
@@ -253,7 +251,7 @@ export class Hero extends Phaser.Sprite {
     {
         if (!this.body.onFloor()) {
             // console.log('STOP WALKING');
-            SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.StopWalk);
             this.wasWalking = false;
             return;
         }
@@ -261,14 +259,14 @@ export class Hero extends Phaser.Sprite {
         // Remember if he was walking
         if (this.body.deltaAbsX() > 0 && !this.wasWalking) {
             // console.log('START WALKING');
-            SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.StartWalk);
             this.wasWalking = true;
             return;
         }
 
         if (this.body.deltaAbsX() == 0 && this.wasWalking) {
             // console.log('STOP WALKING');
-            SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
+            SoundManager.instance.send(SoundManager.StopWalk);
             this.wasWalking = false;
             return;
         }
@@ -276,7 +274,7 @@ export class Hero extends Phaser.Sprite {
 
     public lands()
     {
-        SoundManager.instance.send(SoundManager.ReceiverLand, [SoundManager.ActionBang]);
+        SoundManager.instance.send(SoundManager.Landing);
     }
 
     private restartLevel() {

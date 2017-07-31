@@ -4,32 +4,30 @@ export default class SoundManager {
     private game;
     static instance: SoundManager;
 
-    static ReceiverDay = 'Day';
-    static ReceiverNight = 'Night';
-    static ReceiverTexture = 'Texture';
-    static ReceiverStartWalk = 'StartWalk';
-    static ReceiverStopWalk = 'StopWalk';
-    static ReceiverJump = 'Jump';
-    static ReceiverLand = 'Land';
-    static ReceiverShutdown = 'Shutdown';
-    static ReceiverBox = 'Box';
-    static ReceiverWin = 'Win';
-    static ReceiverLadderStart = 'Ladder';
-    static ReceiverLadderStop = 'LadderStop';
-    static ReceiverDoor = 'Door';
+    static AmbientDay = 'AmbientDay';
+    static AmbientNight = 'Night';
 
-    static ActionBang = 'bang';
+    static ChangeFloor = 'Texture';
+    static StartWalk = 'StartWalk';
+    static StopWalk = 'StopWalk';
+    static Jump = 'Jump';
+    static Landing = 'Land';
+    static Shutdown = 'Shutdown';
+    static PickBox = 'Box';
+    static StartClimbing = 'Ladder';
+    static StopClimbing = 'LadderStop';
+    static DoorClose = 'Door';
+
     static FloorBeton: number = 1;
     static FloorMetal: number = 2;
     static FloorCarton: number = 3;
-    static FloorWater: number = 4;
 
     public currentFloorType: number;
 
     public soundWalkBeton;
     public soundWalkMetal;
     public soundWalkCarton;
-    public soundLadder;
+    public soundClimbing;
 
     public soundPickup;
     public soundShutdown;
@@ -57,7 +55,7 @@ export default class SoundManager {
         this.soundWalkMetal = this.game.add.audio('walkMetal');
         this.soundWalkBeton = this.game.add.audio('walkBeton');
         this.soundWalkCarton = this.game.add.audio('walkCarton');
-        this.soundLadder = this.game.add.audio('ladder');
+        this.soundClimbing = this.game.add.audio('ladder');
         this.soundDay = this.game.add.audio('day');
         this.soundNight = this.game.add.audio('night');
         this.soundDoor = this.game.add.audio('door');
@@ -76,20 +74,19 @@ export default class SoundManager {
         this.soundShutdown = this.game.add.audio('shutdown');
     }
 
-    public send(receiver: String, parameters: any)
+    public send(receiver: String, parameters: any = null)
     {
         switch (receiver) {
-            case SoundManager.ReceiverTexture:
+            case SoundManager.ChangeFloor:
                 var changedFloor = this.currentFloorType != parameters[0];
                 this.currentFloorType = parameters[0];
                 if (this.isWalking && changedFloor) {
-                    SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
-                    SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
+                    SoundManager.instance.send(SoundManager.StopWalk);
+                    SoundManager.instance.send(SoundManager.StartWalk);
                 }
 
                 return;
-            case SoundManager.ReceiverLand:
-                console.log('LANDING');
+            case SoundManager.Landing:
                 var rand = Math.floor(Math.random() * (3));
                 switch (this.currentFloorType) {
                     case SoundManager.FloorBeton:
@@ -100,11 +97,11 @@ export default class SoundManager {
                         return this.soundsLandCarton[rand].play();
                 }
                 return;
-            case SoundManager.ReceiverBox:
+            case SoundManager.PickBox:
                 return this.soundPickup.play();
-            case SoundManager.ReceiverShutdown:
+            case SoundManager.Shutdown:
                 return this.soundShutdown.play();
-            case SoundManager.ReceiverStartWalk:
+            case SoundManager.StartWalk:
                 this.isWalking = true;
                 switch (this.currentFloorType) {
                     case SoundManager.FloorBeton:
@@ -115,23 +112,23 @@ export default class SoundManager {
                         return this.soundWalkCarton.loopFull(4);
                 }
                 return;
-            case SoundManager.ReceiverStopWalk:
+            case SoundManager.StopWalk:
                 this.isWalking = false;
                 this.soundWalkBeton.stop();
                 this.soundWalkMetal.stop();
                 this.soundWalkCarton.stop();
                 return;
-            case SoundManager.ReceiverDay:
+            case SoundManager.AmbientDay:
                 this.soundNight.stop();
                 return this.soundDay.loopFull(5);
-            case SoundManager.ReceiverNight:
+            case SoundManager.AmbientNight:
                 this.soundDay.stop();
                 return this.soundNight.loopFull(5);
-            case SoundManager.ReceiverLadderStart:
-                return this.soundLadder.loopFull(3);
-            case SoundManager.ReceiverLadderStop:
-                return this.soundLadder.stop();
-            case SoundManager.ReceiverDoor:
+            case SoundManager.StartClimbing:
+                return this.soundClimbing.loopFull(3);
+            case SoundManager.StopClimbing:
+                return this.soundClimbing.stop();
+            case SoundManager.DoorClose:
                 return this.soundDoor.play('', 0, 4);
         }
     }
