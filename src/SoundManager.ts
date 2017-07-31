@@ -1,10 +1,8 @@
 
 declare var $: any;
-declare var window: any;
 
 export default class SoundManager {
 
-    private Pd;
     private game;
     static instance: SoundManager;
 
@@ -53,7 +51,6 @@ export default class SoundManager {
     private isWalking = false;
 
     constructor(game: Phaser.Game) {
-        this.Pd = window.Pd;
         this.game = game;
     }
 
@@ -139,8 +136,6 @@ export default class SoundManager {
             case SoundManager.ReceiverDoor:
                 return this.soundDoor.play('', 0, 4);
         }
-
-        // this.Pd.send(receiver, parameters);
     }
 
     public playRandomEvent()
