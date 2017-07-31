@@ -54,7 +54,7 @@
 	var Boot_1 = __webpack_require__(1);
 	var Preload_1 = __webpack_require__(2);
 	var Menu_1 = __webpack_require__(3);
-	var Play_1 = __webpack_require__(4);
+	var Play_1 = __webpack_require__(7);
 	var SimpleGame = (function (_super) {
 	    __extends(SimpleGame, _super);
 	    function SimpleGame() {
@@ -113,55 +113,52 @@
 	        _super.apply(this, arguments);
 	    }
 	    Preload.prototype.preload = function () {
-	        this.load.tilemap('intro', 'assets/forrest/intro.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.tilemap('level1', 'assets/forrest/level1.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.tilemap('level2', 'assets/forrest/level2.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.tilemap('level3', 'assets/forrest/level3.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.tilemap('level4', 'assets/forrest/level4.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.tilemap('level5', 'assets/forrest/level5.json', null, Phaser.Tilemap.TILED_JSON);
-	        this.load.image('tiles-1', 'assets/forrest/tiles.png');
-	        this.load.spritesheet('nude', 'assets/forrest/nude.png', 32, 32);
-	        this.load.spritesheet('lionel', 'assets/forrest/lionel-big.png', 64, 64);
-	        this.load.spritesheet('michel', 'assets/forrest/michel.png', 64, 64);
-	        this.load.spritesheet('glasses', 'assets/forrest/lionel-glasses.png', 64, 64);
-	        this.load.spritesheet('door', 'assets/forrest/door.png', 60, 100);
-	        this.load.spritesheet('box', 'assets/forrest/box.png', 20, 20);
-	        this.load.spritesheet('king', 'assets/forrest/king.png', 32, 32);
-	        this.load.spritesheet('gnome', 'assets/forrest/gnome.png', 32, 32);
-	        this.load.spritesheet('snake', 'assets/forrest/snake.png', 32, 32);
-	        this.load.spritesheet('coin', 'assets/forrest/coins.png', 16, 16);
-	        this.load.image('background', 'assets/forrest/background.png');
-	        this.load.image('background-day', 'assets/forrest/background-day.png');
-	        this.load.image('background-night', 'assets/forrest/background-night.png');
+	        this.load.tilemap('intro', 'assets/levels/intro.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level2', 'assets/levels/level2.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level3', 'assets/levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level4', 'assets/levels/level4.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level5', 'assets/levels/level5.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.tilemap('level6', 'assets/levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
+	        this.load.image('tiles-1', 'assets/images/tiles.png');
+	        this.load.spritesheet('lionel', 'assets/images/lionel-big.png', 64, 64);
+	        this.load.spritesheet('michel', 'assets/images/michel.png', 64, 64);
+	        this.load.spritesheet('glasses', 'assets/images/lionel-glasses.png', 64, 64);
+	        this.load.spritesheet('door', 'assets/images/door.png', 60, 100);
+	        this.load.spritesheet('terminal', 'assets/images/terminal.png', 64, 64);
+	        this.load.spritesheet('box', 'assets/images/box.png', 20, 20);
+	        this.load.spritesheet('rat', 'assets/images/rat-all.png', 32, 32);
+	        this.load.image('background', 'assets/images/background.png');
 	        this.load.bitmapFont('carrier-command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
-	        this.load.image('blackout', 'assets/blackout.png');
-	        this.load.audio('land_metal_0', 'assets/sounds/LAND_TOLE04.wav');
-	        this.load.audio('land_metal_1', 'assets/sounds/LAND_TOLE01.wav');
-	        this.load.audio('land_metal_2', 'assets/sounds/LAND_TOLE02.wav');
-	        this.load.audio('land_metal_3', 'assets/sounds/LAND_TOLE03.wav');
-	        this.load.audio('land_carton_0', 'assets/sounds/LAND_CARTON04.wav');
-	        this.load.audio('land_carton_1', 'assets/sounds/LAND_CARTON01.wav');
-	        this.load.audio('land_carton_2', 'assets/sounds/LAND_CARTON02.wav');
-	        this.load.audio('land_carton_3', 'assets/sounds/LAND_CARTON03.wav');
-	        this.load.audio('land_beton_0', 'assets/sounds/LAND_BETON04.wav');
-	        this.load.audio('land_beton_1', 'assets/sounds/LAND_BETON01.wav');
-	        this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.wav');
-	        this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.wav');
-	        this.load.audio('walkMetal', 'assets/sounds/STEP_TOLE_LOOP.wav');
-	        this.load.audio('walkBeton', 'assets/sounds/STEP_BETON_LOOP.wav');
-	        this.load.audio('walkCarton', 'assets/sounds/STEP_CARTON_LOOP.wav');
-	        this.load.audio('day', 'assets/sounds/AMBDAY.wav');
-	        this.load.audio('night', 'assets/sounds/AMBNIGHT.wav');
-	        this.load.audio('shutdown', 'assets/sounds/SWITCH_SHUTDOWN.wav');
-	        this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.wav');
-	        this.load.audio('door', 'assets/sounds/DOOR.wav');
-	        this.load.audio('ladder', 'assets/sounds/ECHELLE_MONTE.wav');
-	        this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.wav');
-	        this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.wav');
-	        this.load.audio('event_2', 'assets/sounds/AMB_EVENT03.wav');
-	        this.load.audio('event_3', 'assets/sounds/AMB_EVENT04.wav');
-	        this.load.audio('event_4', 'assets/sounds/AMB_EVENT05.wav');
-	        this.load.audio('event_5', 'assets/sounds/AMB_EVENT06.wav');
+	        this.load.image('blackout', 'assets/images/blackout.png');
+	        this.load.audio('land_metal_0', 'assets/sounds/LAND_TOLE04.mp3');
+	        this.load.audio('land_metal_1', 'assets/sounds/LAND_TOLE01.mp3');
+	        this.load.audio('land_metal_2', 'assets/sounds/LAND_TOLE02.mp3');
+	        this.load.audio('land_metal_3', 'assets/sounds/LAND_TOLE03.mp3');
+	        this.load.audio('land_carton_0', 'assets/sounds/LAND_CARTON04.mp3');
+	        this.load.audio('land_carton_1', 'assets/sounds/LAND_CARTON01.mp3');
+	        this.load.audio('land_carton_2', 'assets/sounds/LAND_CARTON02.mp3');
+	        this.load.audio('land_carton_3', 'assets/sounds/LAND_CARTON03.mp3');
+	        this.load.audio('land_beton_0', 'assets/sounds/LAND_BETON04.mp3');
+	        this.load.audio('land_beton_1', 'assets/sounds/LAND_BETON01.mp3');
+	        this.load.audio('land_beton_2', 'assets/sounds/LAND_BETON02.mp3');
+	        this.load.audio('land_beton_3', 'assets/sounds/LAND_BETON03.mp3');
+	        this.load.audio('walkMetal', 'assets/sounds/STEP_TOLE_LOOP.mp3');
+	        this.load.audio('walkBeton', 'assets/sounds/STEP_BETON_LOOP.mp3');
+	        this.load.audio('walkCarton', 'assets/sounds/STEP_CARTON_LOOP.mp3');
+	        this.load.audio('day', 'assets/sounds/AMBDAY.mp3');
+	        this.load.audio('night', 'assets/sounds/AMBNIGHT.mp3');
+	        this.load.audio('shutdown', 'assets/sounds/SWITCH_SHUTDOWN.mp3');
+	        this.load.audio('pickup', 'assets/sounds/PICKUP_BOX.mp3');
+	        this.load.audio('door', 'assets/sounds/DOOR.mp3');
+	        this.load.audio('ladder', 'assets/sounds/ECHELLE_MONTE.mp3');
+	        this.load.audio('rat', 'assets/sounds/RAT.wav');
+	        this.load.audio('event_0', 'assets/sounds/AMB_EVENT01.mp3');
+	        this.load.audio('event_1', 'assets/sounds/AMB_EVENT02.mp3');
+	        this.load.audio('event_2', 'assets/sounds/AMB_EVENT03.mp3');
+	        this.load.audio('event_3', 'assets/sounds/AMB_EVENT04.mp3');
+	        this.load.audio('event_4', 'assets/sounds/AMB_EVENT05.mp3');
+	        this.load.audio('event_5', 'assets/sounds/AMB_EVENT06.mp3');
 	    };
 	    Preload.prototype.create = function () {
 	        this.game.state.start('Menu');
@@ -174,7 +171,7 @@
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var __extends = (this && this.__extends) || function (d, b) {
@@ -182,6 +179,8 @@
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
+	var Rat_1 = __webpack_require__(4);
+	var Terminal_1 = __webpack_require__(6);
 	var Menu = (function (_super) {
 	    __extends(Menu, _super);
 	    function Menu() {
@@ -219,9 +218,15 @@
 	        this.door = this.game.add.sprite(20, 650, 'door', 0);
 	        this.door.animations.add('idle', [0, 1], 0.5, true);
 	        this.door.animations.play('idle');
+	        this.dayLayer = this.game.add.group();
+	        this.dayLayer.name = 'ItemsDay';
+	        this.nightLayer = this.game.add.group();
+	        this.nightLayer.name = 'ItemsNight';
 	        this.box = this.game.add.sprite(1220, 590, 'box', 0);
 	        this.box.animations.add('idle', [0, 1, 2], 3, true);
 	        this.box.animations.play('idle');
+	        this.rat = new Rat_1.Rat(this.dayLayer, this.nightLayer, 100, 720, 400, 'rat', 0);
+	        this.terminal = new Terminal_1.Terminal(this.dayLayer, this.nightLayer, 900, 705, 'terminal', 0);
 	    };
 	    Menu.prototype.fadein = function (text) {
 	        text.alpha = 0.1;
@@ -243,6 +248,10 @@
 	        this.background.destroy();
 	        this.door.destroy();
 	        this.box.destroy();
+	        this.rat.destroy();
+	        this.rat.eyes.destroy();
+	        this.terminal.destroy();
+	        this.terminal.screen.destroy();
 	    };
 	    return Menu;
 	}(Phaser.State));
@@ -260,12 +269,287 @@
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Colleague_1 = __webpack_require__(5);
-	var Hero_1 = __webpack_require__(6);
-	var Box_1 = __webpack_require__(8);
-	var SoundManager_1 = __webpack_require__(7);
-	var Level_1 = __webpack_require__(9);
-	var Door_1 = __webpack_require__(10);
+	var SoundManager_1 = __webpack_require__(5);
+	var Rat = (function (_super) {
+	    __extends(Rat, _super);
+	    function Rat(dayGroup, nightGroup, x, y, toX, key, frame) {
+	        _super.call(this, dayGroup.game, x, y, key, frame);
+	        this.speed = 80;
+	        this.dying = false;
+	        this.dead = false;
+	        this.limitLeftX = x;
+	        this.limitRightX = toX;
+	        this.anchor.setTo(.5, .5);
+	        dayGroup.game.physics.enable(this, Phaser.Physics.ARCADE);
+	        this.body.bounce.y = 0.2;
+	        this.body.collideWorldBounds = true;
+	        this.body.setSize(18, 16, 8, 16);
+	        this.animations.add('right', [0, 1], 10, true);
+	        this.animations.add('left', [4, 5], 10, true);
+	        this.animations.add('dying-right', [8, 9, 10, 11, 12, 13], 10, false);
+	        this.animations.add('dying-left', [14, 15, 16, 17, 18, 19], 10, false);
+	        this.facing = 'left';
+	        dayGroup.add(this);
+	        this.eyes = this.game.add.sprite(this.x, this.y, 'rat', 0, nightGroup);
+	        this.eyes.animations.add('right', [2, 3], 10, true);
+	        this.eyes.animations.add('left', [6, 7], 10, true);
+	        this.eyes.alpha = 0;
+	    }
+	    Rat.prototype.byNight = function () {
+	        if (this.dead == false) {
+	            this.eyes.alpha = 1;
+	        }
+	    };
+	    Rat.prototype.dies = function () {
+	        if (this.dying == false) {
+	            this.eyes.alpha = 0;
+	            this.dying = true;
+	            this.body.velocity.x = 0;
+	            this.body.velocity.y = 0;
+	            this.animations.play('dying-' + this.facing);
+	            this.body.checkCollision.up = false;
+	            this.body.checkCollision.left = false;
+	            this.body.checkCollision.right = false;
+	            SoundManager_1.default.instance.send(SoundManager_1.default.Rat);
+	            this.dead = true;
+	        }
+	    };
+	    Rat.prototype.update = function () {
+	        if (!this.dying) {
+	            if (this.x < this.limitLeftX) {
+	                this.facing = 'right';
+	            }
+	            else if (this.x > this.limitRightX) {
+	                this.facing = 'left';
+	            }
+	            if (this.facing == 'left') {
+	                this.animations.play('left');
+	                this.body.velocity.x = -this.speed;
+	            }
+	            else if (this.facing == 'right') {
+	                this.animations.play('right');
+	                this.body.velocity.x = this.speed;
+	            }
+	            this.eyes.x = this.body.x - 15;
+	            this.eyes.y = this.body.y - 16;
+	            if (this.facing == 'left') {
+	                this.eyes.animations.play('left');
+	            }
+	            else if (this.facing == 'right') {
+	                this.eyes.animations.play('right');
+	            }
+	        }
+	    };
+	    return Rat;
+	}(Phaser.Sprite));
+	exports.Rat = Rat;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	var SoundManager = (function () {
+	    function SoundManager(game) {
+	        this.soundsLandMetal = [];
+	        this.soundsLandBeton = [];
+	        this.soundsLandCarton = [];
+	        this.soundsEvent = [];
+	        this.nextEventTime = 0;
+	        this.isWalking = false;
+	        this.game = game;
+	    }
+	    SoundManager.prototype.init = function () {
+	        this.soundWalkMetal = this.game.add.audio('walkMetal');
+	        this.soundWalkBeton = this.game.add.audio('walkBeton');
+	        this.soundWalkCarton = this.game.add.audio('walkCarton');
+	        this.soundClimbing = this.game.add.audio('ladder');
+	        this.soundDay = this.game.add.audio('day');
+	        this.soundNight = this.game.add.audio('night');
+	        this.soundDoor = this.game.add.audio('door');
+	        this.soundRat = this.game.add.audio('rat');
+	        for (var i = 0; i < 4; i++) {
+	            this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
+	            this.soundsLandBeton.push(this.game.add.audio('land_beton_' + i));
+	            this.soundsLandCarton.push(this.game.add.audio('land_carton_' + i));
+	        }
+	        for (var i = 0; i < 6; i++) {
+	            this.soundsEvent.push(this.game.add.audio('event_' + i));
+	        }
+	        this.soundPickup = this.game.add.audio('pickup');
+	        this.soundShutdown = this.game.add.audio('shutdown');
+	    };
+	    SoundManager.prototype.send = function (receiver, parameters) {
+	        if (parameters === void 0) { parameters = null; }
+	        switch (receiver) {
+	            case SoundManager.ChangeFloor:
+	                var changedFloor = this.currentFloorType != parameters[0];
+	                this.currentFloorType = parameters[0];
+	                if (this.isWalking && changedFloor) {
+	                    SoundManager.instance.send(SoundManager.StopWalk);
+	                    SoundManager.instance.send(SoundManager.StartWalk);
+	                }
+	                return;
+	            case SoundManager.Landing:
+	                var rand = Math.floor(Math.random() * (3));
+	                switch (this.currentFloorType) {
+	                    case SoundManager.FloorBeton:
+	                        return this.soundsLandBeton[rand].play();
+	                    case SoundManager.FloorMetal:
+	                        return this.soundsLandMetal[rand].play();
+	                    case SoundManager.FloorCarton:
+	                        return this.soundsLandCarton[rand].play();
+	                }
+	                return;
+	            case SoundManager.PickBox:
+	                return this.soundPickup.play();
+	            case SoundManager.Shutdown:
+	                return this.soundShutdown.play();
+	            case SoundManager.StartWalk:
+	                this.isWalking = true;
+	                switch (this.currentFloorType) {
+	                    case SoundManager.FloorBeton:
+	                        return this.soundWalkBeton.loopFull(4);
+	                    case SoundManager.FloorMetal:
+	                        return this.soundWalkMetal.loopFull(4);
+	                    case SoundManager.FloorCarton:
+	                        return this.soundWalkCarton.loopFull(4);
+	                }
+	                return;
+	            case SoundManager.StopWalk:
+	                this.isWalking = false;
+	                this.soundWalkBeton.stop();
+	                this.soundWalkMetal.stop();
+	                this.soundWalkCarton.stop();
+	                return;
+	            case SoundManager.AmbientDay:
+	                this.soundNight.stop();
+	                return this.soundDay.loopFull(5);
+	            case SoundManager.AmbientNight:
+	                this.soundDay.stop();
+	                return this.soundNight.loopFull(5);
+	            case SoundManager.StartClimbing:
+	                return this.soundClimbing.loopFull(3);
+	            case SoundManager.StopClimbing:
+	                return this.soundClimbing.stop();
+	            case SoundManager.DoorClose:
+	                return this.soundDoor.play('', 0, 4);
+	            case SoundManager.Rat:
+	                return this.soundRat.play('', 0, 2);
+	        }
+	    };
+	    SoundManager.prototype.playRandomEvent = function () {
+	        if (this.game.time.now >= this.nextEventTime) {
+	            var min = 12;
+	            var max = 25;
+	            var randSound = Math.floor(Math.random() * (6));
+	            var randNext = Math.floor(Math.random() * (max - min + 1)) + min;
+	            this.soundsEvent[randSound].play('', 0, 0.7);
+	            this.nextEventTime = this.game.time.now + (randNext * 1000);
+	        }
+	    };
+	    SoundManager.AmbientDay = 'AmbientDay';
+	    SoundManager.AmbientNight = 'Night';
+	    SoundManager.ChangeFloor = 'Texture';
+	    SoundManager.StartWalk = 'StartWalk';
+	    SoundManager.StopWalk = 'StopWalk';
+	    SoundManager.Jump = 'Jump';
+	    SoundManager.Landing = 'Land';
+	    SoundManager.Shutdown = 'Shutdown';
+	    SoundManager.PickBox = 'Box';
+	    SoundManager.StartClimbing = 'Ladder';
+	    SoundManager.StopClimbing = 'LadderStop';
+	    SoundManager.DoorClose = 'Door';
+	    SoundManager.Rat = 'Rat';
+	    SoundManager.FloorBeton = 1;
+	    SoundManager.FloorMetal = 2;
+	    SoundManager.FloorCarton = 3;
+	    return SoundManager;
+	}());
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = SoundManager;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var Terminal = (function (_super) {
+	    __extends(Terminal, _super);
+	    function Terminal(group, nightGroup, x, y, key, frame) {
+	        _super.call(this, group.game, x, y, key, frame);
+	        this.distance = 30;
+	        this.limitLeftX = x - this.distance;
+	        this.limitRightX = x + this.distance;
+	        this.anchor.setTo(.5, .5);
+	        group.game.physics.enable(this, Phaser.Physics.ARCADE);
+	        this.body.collideWorldBounds = true;
+	        this.body.setSize(40, 80, 6, 16);
+	        this.animations.add('idle', [0, 1, 2, 3], 3, true);
+	        this.animations.play('idle');
+	        this.facing = 'left';
+	        this.body.allowGravity = false;
+	        this.body.velocity.set(0, 0);
+	        this.body.immovable = true;
+	        this.body.moves = false;
+	        group.add(this);
+	        this.alpha = 1;
+	        this.screen = this.game.add.sprite(this.x, this.y, 'terminal', 0, nightGroup);
+	        this.screen.anchor.setTo(.5, .5);
+	        this.screen.animations.add('idle', [4, 5, 6, 7], 3, true);
+	        this.screen.animations.play('idle');
+	        this.screen.alpha = 0;
+	    }
+	    Terminal.prototype.byNight = function () {
+	        this.screen.alpha = 1;
+	    };
+	    Terminal.prototype.update = function () {
+	        // if (this.x < this.limitLeftX) {
+	        //     this.facing = 'right';
+	        // } else if (this.x > this.limitRightX) {
+	        //     this.facing = 'left';
+	        // }
+	        //
+	        // if (this.facing == 'left') {
+	        //     this.animations.play('left');
+	        //     this.body.velocity.x = -this.speed;
+	        //
+	        // } else if (this.facing == 'right') {
+	        //     this.animations.play('right');
+	        //     this.body.velocity.x = this.speed;
+	        // }
+	    };
+	    return Terminal;
+	}(Phaser.Sprite));
+	exports.Terminal = Terminal;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var Colleague_1 = __webpack_require__(8);
+	var Hero_1 = __webpack_require__(9);
+	var Box_1 = __webpack_require__(10);
+	var SoundManager_1 = __webpack_require__(5);
+	var Level_1 = __webpack_require__(11);
+	var Door_1 = __webpack_require__(12);
+	var Rat_1 = __webpack_require__(4);
+	var RatPatrol_1 = __webpack_require__(13);
+	var Terminal_1 = __webpack_require__(6);
 	var Play = (function (_super) {
 	    __extends(Play, _super);
 	    function Play() {
@@ -273,6 +557,8 @@
 	        this.blackout = false;
 	        this.changingLevel = false;
 	        this.levelNumber = 0;
+	        this.rats = [];
+	        this.terminals = [];
 	        this.debug = false;
 	    }
 	    Play.prototype.create = function () {
@@ -295,16 +581,20 @@
 	        this.background = this.game.add.tileSprite(0, 0, 1280, 800, 'background', 0, this.backgroundLayer);
 	        this.background.loadTexture('background');
 	        this.levels = [
-	            new Level_1.Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 2017/07/07 4:55 pm'),
-	            new Level_1.Level(2, new Phaser.Point(80, 573), new Phaser.Point(1100, 728), 'Friday 2017/14/07 4:57 pm'),
-	            new Level_1.Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 2017/21/07 4:51 pm'),
-	            new Level_1.Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 2017/28/07 4:59 pm'),
-	            new Level_1.Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 723), 'Friday 2017/04/08 4:57 pm')
+	            new Level_1.Level(1, new Phaser.Point(80, 700), new Phaser.Point(1200, 728), 'Friday 7th July 4:55 pm', [], []),
+	            new Level_1.Level(2, new Phaser.Point(80, 573), new Phaser.Point(1215, 728), 'Friday 14th July 4:57 pm', [], []),
+	            new Level_1.Level(3, new Phaser.Point(80, 175), new Phaser.Point(1200, 520), 'Friday 21th July 4:51 pm', [new RatPatrol_1.RatPatrol(80, 510, 203)], [new Phaser.Point(280, 336)]),
+	            new Level_1.Level(6, new Phaser.Point(80, 700), new Phaser.Point(630, 584), 'Friday 28th July 4:59 pm', [], [new Phaser.Point(575, 352), new Phaser.Point(915, 416)]),
+	            new Level_1.Level(5, new Phaser.Point(80, 510), new Phaser.Point(1271, 233), 'Friday 4th August 5:01 pm', [new RatPatrol_1.RatPatrol(400, 340, 540), new RatPatrol_1.RatPatrol(1070, 510, 1140), new RatPatrol_1.RatPatrol(578, 600, 733)], [new Phaser.Point(809, 464), new Phaser.Point(244, 528)]),
+	            new Level_1.Level(4, new Phaser.Point(80, 190), new Phaser.Point(230, 726), 'Friday 11th August 4:48 pm', [new RatPatrol_1.RatPatrol(546, 336, 711), new RatPatrol_1.RatPatrol(647, 710, 1070)], [new Phaser.Point(1243, 448), new Phaser.Point(470, 576)])
 	        ];
 	        this.startLevel(0);
 	        this.game.camera.follow(this.hero);
 	        this.retryKey = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
-	        SoundManager_1.default.instance.send('InitRoomtone', ['bang']);
+	        this.game.input.onDown.add(function () {
+	            console.log('X = ' + this.game.input.activePointer.worldX);
+	            console.log('Y = ' + this.game.input.activePointer.worldY);
+	        }, this);
 	    };
 	    Play.prototype.startLevel = function (levelNum) {
 	        if (this.changingLevel == true && this.blackout == true) {
@@ -319,7 +609,7 @@
 	            this.transitionText = this.game.add.bitmapText(210, 330, 'carrier-command', 'Arf. I hate fridays.', 26);
 	            this.transitionText.alpha = 0;
 	            this.door.close();
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverDoor, null);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.DoorClose);
 	            var endOfGameTween = this.game.add.tween(this.transitionText).to({ alpha: 1 }, 10000, "Linear", true);
 	            endOfGameTween.onComplete.addOnce(function () {
 	                window.location.reload(true);
@@ -329,7 +619,7 @@
 	        // next level
 	        var level = this.levels[this.levelNumber];
 	        // Launc day sound
-	        SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverDay, null);
+	        SoundManager_1.default.instance.send(SoundManager_1.default.AmbientDay);
 	        // create transition screen
 	        this.transitionSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
 	        this.transitionSprite.alpha = 1;
@@ -358,6 +648,12 @@
 	        this.game.physics.arcade.gravity.y = 350;
 	        this.box = new Box_1.Box(this.dayLayer, level.getBoxPosition().x, level.getBoxPosition().y, 'box', 0);
 	        this.door = new Door_1.Door(this.dayLayer, this.nightLayer, level.getDoorPosition().x, level.getDoorPosition().y, 'door', 0);
+	        level.getRatPatrols().map(function (patrol) {
+	            this.rats.push(new Rat_1.Rat(this.dayLayer, this.nightLayer, patrol.fromX, patrol.fromY, patrol.toX, 'rat', 0));
+	        }.bind(this));
+	        level.getTerminalPositions().map(function (position) {
+	            this.terminals.push(new Terminal_1.Terminal(this.dayLayer, this.nightLayer, position.x, position.y, 'terminal', 0));
+	        }.bind(this));
 	        this.hero = new Hero_1.Hero(this.dayLayer, this.nightLayer, level.getStartPosition().x, level.getStartPosition().y, 'lionel', 0, this.game.input.keyboard);
 	        this.colleague = new Colleague_1.Colleague(this.dayLayer, level.getColleaguePosition().x, level.getColleaguePosition().y, 'michel', 0);
 	        // make the level appears
@@ -383,6 +679,8 @@
 	        this.colleague.weekendText1.destroy(true);
 	        this.colleague.weekendText2.destroy(true);
 	        this.retryText.destroy(true);
+	        this.rats.map(function (rat) { rat.destroy(); rat.eyes.destroy(true); });
+	        this.terminals.map(function (terminal) { terminal.destroy(); terminal.screen.destroy(true); });
 	    };
 	    Play.prototype.update = function () {
 	        if (this.retryKey.isDown) {
@@ -401,15 +699,21 @@
 	        this.box.update();
 	        this.game.physics.arcade.collide(this.hero, this.box, function () {
 	            this.box.destroy();
+	            SoundManager_1.default.instance.send(SoundManager_1.default.PickBox);
 	            this.colleague.switchOffTheLight(function () {
 	                this.blackoutSprite = this.game.add.sprite(0, 0, 'blackout', 0, this.blackoutLayer);
 	                this.blackoutSprite.alpha = 1;
 	                this.blackout = true;
 	                this.hero.byNight();
 	                this.door.byNight();
-	                SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverBox, [SoundManager_1.default.ActionBang]);
-	                SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverShutdown, [SoundManager_1.default.ActionBang]);
-	                SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverNight, null);
+	                this.rats.map(function (rat) {
+	                    rat.byNight();
+	                });
+	                this.terminals.map(function (terminal) {
+	                    terminal.byNight();
+	                });
+	                SoundManager_1.default.instance.send(SoundManager_1.default.Shutdown);
+	                SoundManager_1.default.instance.send(SoundManager_1.default.AmbientNight);
 	                this.retryText = this.game.add.bitmapText(50, 50, 'carrier-command', '(Press R to retry this level)', 10);
 	                this.fadein(this.retryText);
 	            }.bind(this), this.hero);
@@ -420,6 +724,10 @@
 	                this.startLevel(this.levelNumber);
 	            }
 	        }.bind(this), null, this);
+	        this.game.physics.arcade.collide(this.rats, this.layer);
+	        this.game.physics.arcade.collide(this.hero, this.rats, function (hero, rat) {
+	            rat.dies();
+	        }.bind(this), null, this);
 	        SoundManager_1.default.instance.playRandomEvent();
 	    };
 	    Play.prototype.retryLevel = function () {
@@ -429,6 +737,9 @@
 	    };
 	    Play.prototype.render = function () {
 	        if (this.debug) {
+	            this.rats.map(function (rat) {
+	                this.game.debug.body(rat);
+	            }.bind((this)));
 	            this.game.debug.body(this.hero);
 	            this.game.debug.body(this.box);
 	            this.game.debug.body(this.door);
@@ -447,7 +758,7 @@
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -503,7 +814,7 @@
 
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -512,7 +823,7 @@
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var SoundManager_1 = __webpack_require__(7);
+	var SoundManager_1 = __webpack_require__(5);
 	var Hero = (function (_super) {
 	    __extends(Hero, _super);
 	    function Hero(dayGroup, nightGroup, x, y, key, frame, keyboard) {
@@ -524,6 +835,7 @@
 	        this.wasWalking = false;
 	        this.walkingFloorIndex = 0;
 	        this.answering = false;
+	        this.night = false;
 	        this.originX = x;
 	        this.originY = y;
 	        this.finishX = x;
@@ -540,6 +852,7 @@
 	        this.animations.add('left', [15, 14, 13, 12], 6, true);
 	        this.animations.add('jump-right', [16, 17, 18, 19], 6, false);
 	        this.animations.add('jump-left', [23, 22, 21, 20], 6, false);
+	        this.animations.add('climb', [24, 25], 4, true);
 	        dayGroup.add(this);
 	        this.cursorKeys = keyboard.createCursorKeys();
 	        this.jumpingKey = keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -554,7 +867,7 @@
 	    }
 	    Hero.prototype.update = function () {
 	        if (this.answering) {
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverStopWalk, null);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.StopWalk);
 	            this.animations.play('idle-left');
 	            this.body.velocity.x = 0;
 	            this.body.velocity.y = 0;
@@ -597,7 +910,7 @@
 	        if (isWalking) {
 	        }
 	        if (this.jumpingKey.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer) {
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverJump, [SoundManager_1.default.ActionBang]);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.Jump);
 	            this.body.velocity.y = -500;
 	            this.jumpTimer = this.game.time.now + 100;
 	            if (this.facing == 'left') {
@@ -619,20 +932,39 @@
 	                this.climbMaxY = this.y - 150;
 	                this.climbMinX = this.x - 5;
 	                this.climbMaxX = this.x + 5;
-	                SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverLadderStart, null);
+	                this.animations.play('climb');
+	                SoundManager_1.default.instance.send(SoundManager_1.default.StartClimbing);
 	            }
 	            if (this.y < this.climbMaxY || this.x < this.climbMinX || this.x > this.climbMaxX) {
 	                this.body.velocity.y = +400;
 	                this.body.velocity.x = 0;
 	                this.climbing = false;
-	                SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverLadderStop, null);
+	                this.animations.play('idle-right');
+	                SoundManager_1.default.instance.send(SoundManager_1.default.StopClimbing);
 	            }
 	            else if (this.climbing && (this.x > this.climbMinX || this.x < this.climbMaxX)) {
 	                this.body.velocity.y = -150;
 	            }
 	        }
 	        else {
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverLadderStop, null);
+	            this.climbing = false;
+	            if (this.animations.currentAnim.name == 'climb') {
+	                this.animations.play('idle-right');
+	            }
+	            SoundManager_1.default.instance.send(SoundManager_1.default.StopClimbing);
+	        }
+	        // Don't collide with upper tiles if climbing
+	        if (this.climbing) {
+	            this.body.checkCollision.up = false;
+	            if (this.night) {
+	                this.glasses.alpha = 0;
+	            }
+	        }
+	        else {
+	            this.body.checkCollision.up = true;
+	            if (this.night) {
+	                this.glasses.alpha = 1;
+	            }
 	        }
 	        this.glasses.x = this.body.x - 10;
 	        this.glasses.y = this.body.y - 5;
@@ -659,6 +991,7 @@
 	    };
 	    Hero.prototype.byNight = function () {
 	        this.glasses.alpha = 1;
+	        this.night = true;
 	    };
 	    Hero.prototype.changeOriginPosition = function () {
 	        this.originX = this.x;
@@ -682,7 +1015,6 @@
 	            26: SoundManager_1.default.FloorMetal,
 	            // CARTON
 	            42: SoundManager_1.default.FloorCarton,
-	            13: SoundManager_1.default.FloorWater,
 	            // LADDER TOP
 	            41: SoundManager_1.default.FloorMetal,
 	            // LADDER BOTTOM
@@ -690,7 +1022,7 @@
 	        };
 	        // console.log('NOW WALKING ON ' + index);
 	        this.walkingFloorIndex = index;
-	        SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverTexture, [textureSounds[index]]);
+	        SoundManager_1.default.instance.send(SoundManager_1.default.ChangeFloor, [textureSounds[index]]);
 	    };
 	    Hero.prototype.updateSoundPan = function () {
 	        SoundManager_1.default.instance.send('pos', [this.x / 1280]);
@@ -698,26 +1030,26 @@
 	    Hero.prototype.updateWalkingState = function () {
 	        if (!this.body.onFloor()) {
 	            // console.log('STOP WALKING');
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverStopWalk, [SoundManager_1.default.ActionBang]);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.StopWalk);
 	            this.wasWalking = false;
 	            return;
 	        }
 	        // Remember if he was walking
 	        if (this.body.deltaAbsX() > 0 && !this.wasWalking) {
 	            // console.log('START WALKING');
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverStartWalk, [SoundManager_1.default.ActionBang]);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.StartWalk);
 	            this.wasWalking = true;
 	            return;
 	        }
 	        if (this.body.deltaAbsX() == 0 && this.wasWalking) {
 	            // console.log('STOP WALKING');
-	            SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverStopWalk, [SoundManager_1.default.ActionBang]);
+	            SoundManager_1.default.instance.send(SoundManager_1.default.StopWalk);
 	            this.wasWalking = false;
 	            return;
 	        }
 	    };
 	    Hero.prototype.lands = function () {
-	        SoundManager_1.default.instance.send(SoundManager_1.default.ReceiverLand, [SoundManager_1.default.ActionBang]);
+	        SoundManager_1.default.instance.send(SoundManager_1.default.Landing);
 	    };
 	    Hero.prototype.restartLevel = function () {
 	        this.x = this.originX;
@@ -729,134 +1061,7 @@
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	var SoundManager = (function () {
-	    function SoundManager(game) {
-	        this.soundsLandMetal = [];
-	        this.soundsLandBeton = [];
-	        this.soundsLandCarton = [];
-	        this.soundsEvent = [];
-	        this.nextEventTime = 0;
-	        this.isWalking = false;
-	        this.Pd = window.Pd;
-	        this.game = game;
-	    }
-	    SoundManager.prototype.init = function () {
-	        this.soundWalkMetal = this.game.add.audio('walkMetal');
-	        this.soundWalkBeton = this.game.add.audio('walkBeton');
-	        this.soundWalkCarton = this.game.add.audio('walkCarton');
-	        this.soundLadder = this.game.add.audio('ladder');
-	        this.soundDay = this.game.add.audio('day');
-	        this.soundNight = this.game.add.audio('night');
-	        this.soundDoor = this.game.add.audio('door');
-	        for (var i = 0; i < 4; i++) {
-	            this.soundsLandMetal.push(this.game.add.audio('land_metal_' + i));
-	            this.soundsLandBeton.push(this.game.add.audio('land_beton_' + i));
-	            this.soundsLandCarton.push(this.game.add.audio('land_carton_' + i));
-	        }
-	        for (var i = 0; i < 6; i++) {
-	            this.soundsEvent.push(this.game.add.audio('event_' + i));
-	        }
-	        this.soundPickup = this.game.add.audio('pickup');
-	        this.soundShutdown = this.game.add.audio('shutdown');
-	    };
-	    SoundManager.prototype.send = function (receiver, parameters) {
-	        switch (receiver) {
-	            case SoundManager.ReceiverTexture:
-	                var changedFloor = this.currentFloorType != parameters[0];
-	                this.currentFloorType = parameters[0];
-	                if (this.isWalking && changedFloor) {
-	                    SoundManager.instance.send(SoundManager.ReceiverStopWalk, [SoundManager.ActionBang]);
-	                    SoundManager.instance.send(SoundManager.ReceiverStartWalk, [SoundManager.ActionBang]);
-	                }
-	                return;
-	            case SoundManager.ReceiverLand:
-	                console.log('LANDING');
-	                var rand = Math.floor(Math.random() * (3));
-	                switch (this.currentFloorType) {
-	                    case SoundManager.FloorBeton:
-	                        return this.soundsLandBeton[rand].play();
-	                    case SoundManager.FloorMetal:
-	                        return this.soundsLandMetal[rand].play();
-	                    case SoundManager.FloorCarton:
-	                        return this.soundsLandCarton[rand].play();
-	                }
-	                return;
-	            case SoundManager.ReceiverBox:
-	                return this.soundPickup.play();
-	            case SoundManager.ReceiverShutdown:
-	                return this.soundShutdown.play();
-	            case SoundManager.ReceiverStartWalk:
-	                this.isWalking = true;
-	                switch (this.currentFloorType) {
-	                    case SoundManager.FloorBeton:
-	                        return this.soundWalkBeton.loopFull(4);
-	                    case SoundManager.FloorMetal:
-	                        return this.soundWalkMetal.loopFull(4);
-	                    case SoundManager.FloorCarton:
-	                        return this.soundWalkCarton.loopFull(4);
-	                }
-	                return;
-	            case SoundManager.ReceiverStopWalk:
-	                this.isWalking = false;
-	                this.soundWalkBeton.stop();
-	                this.soundWalkMetal.stop();
-	                this.soundWalkCarton.stop();
-	                return;
-	            case SoundManager.ReceiverDay:
-	                this.soundNight.stop();
-	                return this.soundDay.loopFull(5);
-	            case SoundManager.ReceiverNight:
-	                this.soundDay.stop();
-	                return this.soundNight.loopFull(5);
-	            case SoundManager.ReceiverLadderStart:
-	                return this.soundLadder.loopFull(3);
-	            case SoundManager.ReceiverLadderStop:
-	                return this.soundLadder.stop();
-	            case SoundManager.ReceiverDoor:
-	                return this.soundDoor.play('', 0, 4);
-	        }
-	        // this.Pd.send(receiver, parameters);
-	    };
-	    SoundManager.prototype.playRandomEvent = function () {
-	        if (this.game.time.now >= this.nextEventTime) {
-	            var min = 12;
-	            var max = 25;
-	            var randSound = Math.floor(Math.random() * (6));
-	            var randNext = Math.floor(Math.random() * (max - min + 1)) + min;
-	            this.soundsEvent[randSound].play('', 0, 0.7);
-	            this.nextEventTime = this.game.time.now + (randNext * 1000);
-	        }
-	    };
-	    SoundManager.ReceiverDay = 'Day';
-	    SoundManager.ReceiverNight = 'Night';
-	    SoundManager.ReceiverTexture = 'Texture';
-	    SoundManager.ReceiverStartWalk = 'StartWalk';
-	    SoundManager.ReceiverStopWalk = 'StopWalk';
-	    SoundManager.ReceiverJump = 'Jump';
-	    SoundManager.ReceiverLand = 'Land';
-	    SoundManager.ReceiverShutdown = 'Shutdown';
-	    SoundManager.ReceiverBox = 'Box';
-	    SoundManager.ReceiverWin = 'Win';
-	    SoundManager.ReceiverLadderStart = 'Ladder';
-	    SoundManager.ReceiverLadderStop = 'LadderStop';
-	    SoundManager.ReceiverDoor = 'Door';
-	    SoundManager.ActionBang = 'bang';
-	    SoundManager.FloorBeton = 1;
-	    SoundManager.FloorMetal = 2;
-	    SoundManager.FloorCarton = 3;
-	    SoundManager.FloorWater = 4;
-	    return SoundManager;
-	}());
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = SoundManager;
-
-
-/***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -907,16 +1112,18 @@
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	"use strict";
 	var Level = (function () {
-	    function Level(num, startPosition, boxPosition, day) {
+	    function Level(num, startPosition, boxPosition, day, ratPatrols, terminalPositions) {
 	        this.startPosition = startPosition;
 	        this.boxPosition = boxPosition;
 	        this.num = num;
 	        this.day = day;
+	        this.ratPatrols = ratPatrols;
+	        this.terminalPositions = terminalPositions;
 	    }
 	    Level.prototype.getStartPosition = function () {
 	        return this.startPosition;
@@ -936,13 +1143,19 @@
 	    Level.prototype.getDay = function () {
 	        return this.day;
 	    };
+	    Level.prototype.getRatPatrols = function () {
+	        return this.ratPatrols;
+	    };
+	    Level.prototype.getTerminalPositions = function () {
+	        return this.terminalPositions;
+	    };
 	    return Level;
 	}());
 	exports.Level = Level;
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1004,6 +1217,22 @@
 	    return Door;
 	}(Phaser.Sprite));
 	exports.Door = Door;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	var RatPatrol = (function () {
+	    function RatPatrol(fromX, fromY, toX) {
+	        this.fromX = fromX;
+	        this.fromY = fromY;
+	        this.toX = toX;
+	    }
+	    return RatPatrol;
+	}());
+	exports.RatPatrol = RatPatrol;
 
 
 /***/ })
